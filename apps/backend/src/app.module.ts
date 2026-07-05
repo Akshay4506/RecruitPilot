@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { EventEmitterModule } from '@nestjs/event-emitter';
 import { validate } from './config/env.validation';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -13,13 +12,6 @@ import { TeamModule } from './modules/team/team.module';
 import { AuditModule } from './modules/audit/audit.module';
 import { NotificationModule } from './modules/notification/notification.module';
 import { InvitationModule } from './modules/invitation/invitation.module';
-import { TimelineModule } from './modules/timeline/timeline.module';
-import { StorageModule } from './modules/storage/storage.module';
-import { CandidateModule } from './modules/candidate/candidate.module';
-import { CandidateAuthModule } from './modules/candidate-auth/candidate-auth.module';
-import { DocumentModule } from './modules/document/document.module';
-import { ReferenceModule } from './modules/reference/reference.module';
-import { CareerProfileModule } from './modules/career-profile/career-profile.module';
 
 @Module({
   imports: [
@@ -34,7 +26,6 @@ import { CareerProfileModule } from './modules/career-profile/career-profile.mod
       }),
       inject: [ConfigService],
     }),
-    EventEmitterModule.forRoot(),
     CompanyModule,
     UserModule,
     AuthModule,
@@ -43,13 +34,6 @@ import { CareerProfileModule } from './modules/career-profile/career-profile.mod
     AuditModule,
     NotificationModule,
     InvitationModule,
-    TimelineModule,
-    StorageModule,
-    CandidateModule,
-    CandidateAuthModule,
-    DocumentModule,
-    ReferenceModule,
-    CareerProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],
