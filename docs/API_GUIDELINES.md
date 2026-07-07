@@ -1,36 +1,39 @@
 # API Guidelines
 
-## 1. RESTful Standards
-- **Nouns, not verbs:** Use `/candidates` instead of `/getCandidates`.
-- **Pluralization:** Keep resource names plural (e.g. `/companies/:id`, not `/company/:id`).
-- **Nesting:** Sub-resources should be nested intuitively (e.g. `/api/v1/candidate/profile/experience`).
+All controllers in RecruitPilot adhere to strict enterprise API standards.
 
-## 2. Response Format
-Every endpoint must return a structured response DTO. Raw data or plain arrays should never be returned at the root level.
+## 1. Request Validation
+- All incoming payloads must be validated using `class-validator` DTOs (Data Transfer Objects).
+- We use a global `ValidationPipe` with `whitelist: true` to automatically strip any fields from the request that are not explicitly defined in the DTO, preventing NoSQL injection and mass-assignment vulnerabilities.
+
+## 2. Authentication & Authorization
+- Every endpoint (except public candidate registration/login) must be protected by a `JwtAuthGuard`.
+- B2B endpoints expect `req.user` to contain `organizationId` and `userId`.
+- B2C endpoints expect `req.user` to contain `candidateId`.
+- **Company Isolation:** A B2B controller must NEVER trust the client to provide the `companyId` in the body. It must always extract `req.user.organizationId` from the verified JWT.
+
+## 3. Response Format
+All successful responses follow a standardized format:
 ```json
 {
   "success": true,
-  "data": {
-    "key": "value"
-  },
-  "message": "Optional success message",
-  "meta": {
-    "pagination": { "page": 1, "total": 10 }
+  "data": { ... },
+  "meta": { "total": 100, "page": 1 } // Optional pagination
+}
+```
+
+## 4. Exception Handling
+- We rely on NestJS built-in exceptions (`BadRequestException`, `NotFoundException`, `UnauthorizedException`).
+- A global `AllExceptionsFilter` catches these, logs them securely, and formats the error for the client:
+```json
+{
+  "success": false,
+  "error": {
+    "code": "BAD_REQUEST",
+    "message": "Invalid pipeline stage"
   }
 }
 ```
-Errors are handled globally by NestJS Exception Filters and return standard HTTP Status Codes.
 
-## 3. Versioning
-All APIs are versioned in the URI: `/api/v1/...`
-
-## 4. Documentation
-We use `@nestjs/swagger` for API documentation. Every endpoint MUST include:
-- `@ApiTags('Domain')` on the Controller.
-- `@ApiOperation({ summary: '...' })` on the method.
-- `@ApiBearerAuth()` for secured routes.
-
-## 5. Security & Authentication
-- **B2B Endpoints:** Protected by `JwtAuthGuard`. The user's tenant context (`organizationId`) is extracted from the JWT.
-- **Candidate Endpoints:** Protected by `CandidateJwtAuthGuard`. The candidate's `candidateId` is strictly extracted from the token, ignoring any path parameters for security.
-- **Role Guards:** Use `@Roles(Role.ADMIN)` for elevated privileges.
+## 5. Swagger Documentation
+- Every endpoint, DTO, and enum must be decorated with `@ApiTags`, `@ApiOperation`, and `@ApiProperty` to generate live OpenAPI documentation for the frontend team.

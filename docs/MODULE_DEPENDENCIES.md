@@ -1,27 +1,27 @@
 # Module Dependencies
 
-The RecruitPilot backend enforces strict module boundaries to prevent circular dependencies and spaghetti code. 
+To avoid circular dependencies and tight coupling, RecruitPilot follows a strict dependency graph.
 
-## Platform (Core) Modules
-These modules provide generic utilities and are consumed by multiple domains. They do not depend on domain modules.
-- **StorageModule:** Handles binary file uploads.
-- **TimelineModule:** Consumes events to build activity streams.
-- **ReferenceModule (Master Data):** Manages canonical lists (Skills, Companies, Locations). Used heavily for AI matching and search.
+## 1. Core Modules (No Upstream Dependencies)
+These modules only depend on Mongoose schemas and standard libraries.
+- `AuthModule`
+- `MasterDataModule` (Skills, Locations, Technologies)
+- `DocumentModule`
+- `TimelineModule`
 
-## Domain Modules
-These handle core business logic and may depend on Platform Modules.
+## 2. Feature Modules (Depend on Core)
+These represent business domains.
+- `JobModule` (Depends on MasterData)
+- `CareerProfileModule` (Depends on MasterData, Document)
 
-### 1. B2B Domain (Company)
-- **AuthModule:** Handles recruiter authentication.
-- **WorkspaceModule:** Manages tenant logic and RBAC.
-- **CompanyModule:** Company profiles and settings.
+## 3. Intersection Modules (Depend on Features)
+These map features together.
+- `ApplicationModule` (Depends on JobModule, CareerProfileModule, DocumentModule)
 
-### 2. B2C Domain (Candidate)
-- **CandidateAuthModule:** Dedicated JWT strategy and endpoints for candidates.
-- **CandidateModule:** Core identity, preferences, and dashboard orchestration.
-- **CareerProfileModule:** Houses reusable embedded schemas (Experience, Education) and the `ProfileAggregatorService`.
-- **DocumentModule:** Reusable platform service for handling resumes, certificates, and attachments via polymorphic ownership.
+## 4. Orchestration Modules (Top Level)
+These power the UI by pulling from everywhere.
+- `RecruiterWorkspaceModule` (Depends on ApplicationModule, JobModule, TimelineModule)
+- `RecruitmentAnalyticsModule` (Depends on ApplicationModule, JobModule)
 
-## Dependency Rules
-1. **No Circular Dependencies:** A module cannot depend on a module that depends on it. Use Event Emitters to break cycles.
-2. **Aggregator Services:** Cross-domain data fetching is handled by Aggregator or Dashboard services (e.g., `DashboardService`) rather than bleeding external domain logic into a controller.
+## The Golden Rule
+An Orchestration Module can import an Intersection Module or a Feature Module, but a Feature Module can NEVER import an Orchestration Module. If a Feature Module needs to trigger an action in an Orchestration Module, it must fire an Event (`@nestjs/event-emitter`), which the Orchestration Module listens to.

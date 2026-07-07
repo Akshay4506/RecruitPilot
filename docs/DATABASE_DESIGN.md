@@ -1,24 +1,27 @@
 # Database Design
 
-The database relies on MongoDB. We leverage a mix of normalized canonical collections and denormalized embedded schemas optimized for read-heavy operations (Dashboards, AI Search).
+RecruitPilot utilizes **MongoDB**, a NoSQL database, allowing for highly flexible, document-based schemas perfectly suited for the deeply nested data structures of recruitment (e.g., nested employment histories, dynamic skills).
 
-## 1. Master Data (Normalized)
-We use a canonical data model for entities that require autocomplete, AI matching, or analytics.
-- **Collections:** `skills`, `technologies`, `job-titles`, `companies`, `locations`, `industries`, `institutions`, `degrees`, `employment-types`, `languages`.
-- **Design:** Instead of free-text strings, profiles store `ObjectId` references to these collections. They feature native Text Indexes for fast search.
+## Core Collections
 
-## 2. Polymorphic Ownership
-Certain entities must be owned by multiple types of users (e.g., a Candidate can own a Project, but a Company can also own a Project).
-- **Implementation:** We use `ownerType` (String enum: 'CANDIDATE', 'COMPANY') and `ownerId` (ObjectId) to create flexible, generic collections.
-- **Examples:** `documents`, `projects`, `timeline_events`.
+### 1. `applications`
+The heart of the recruitment engine. 
+- **Pattern:** Uses the **Snapshot Pattern**. It embeds immutable copies of `jobSnapshot` and `candidateSnapshot`.
+- **References:** Maintains `jobId` and `candidateId` for global analytics.
+- **Indexes:** Indexed heavily on `companyId`, `status`, and `jobId` for recruiter inbox filtering.
 
-## 3. Embedded Subdocuments (Denormalized)
-To optimize the retrieval of a Candidate's career profile without triggering massive multi-collection `$lookup` pipelines, we embed highly coupled data.
-- **Collection:** `candidates`
-- **Embedded Arrays:** `experiences`, `educations`, `skills`, `certifications`, `languages`.
-- **Note:** Embedded items maintain stable inner `_id` values to support targeted updates and deletions.
+### 2. `jobs`
+Represents a living business entity.
+- **Pattern:** Uses the **Attribute Pattern** for `skills` and `technologies`.
+- **Search:** Implements full-text search indexing on `searchMetadata` for lightning-fast candidate job discovery.
 
-## 4. RBAC & Multi-Tenancy
-- **Organizations/Workspaces:** The root tenant.
-- **Users:** Recruiter accounts. Linked to a Workspace via `organizationId`.
-- **Roles:** Defined via an enum array on the User document (`ADMIN`, `RECRUITER`, `VIEWER`), secured at the route level via `@Roles()` guards.
+### 3. `career_profiles`
+The global profile of a candidate.
+- **Pattern:** Highly nested arrays (Experience, Education). We cap array sizes using application logic to prevent unbounded document growth (MongoDB 16MB limit).
+
+### 4. `timeline_events`
+Global audit log.
+- **Pattern:** **Polymorphic Pattern**. Uses `entityType` (APPLICATION, JOB, USER) and `entityId`. Indexed on both to allow ultra-fast retrieval of histories for any specific entity, or global retrieval by `actorId`.
+
+## Aggregation Pipelines
+RecruitPilot actively avoids N+1 queries. We rely heavily on MongoDB Aggregation Pipelines (`$match`, `$group`, `$project`) in the `RecruitmentAnalyticsModule` to calculate funnel conversion rates, hiring velocities, and recruiter leaderboards directly at the database level.

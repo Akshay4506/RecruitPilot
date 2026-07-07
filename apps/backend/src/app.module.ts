@@ -20,6 +20,10 @@ import { CandidateAuthModule } from './modules/candidate-auth/candidate-auth.mod
 import { DocumentModule } from './modules/document/document.module';
 import { ReferenceModule } from './modules/reference/reference.module';
 import { CareerProfileModule } from './modules/career-profile/career-profile.module';
+import { JobModule } from './modules/job/job.module';
+import { ApplicationModule } from './modules/application/application.module';
+import { RecruiterWorkspaceModule } from './modules/recruiter-workspace/recruiter-workspace.module';
+import { RecruitmentAnalyticsModule } from './modules/recruitment-analytics/recruitment-analytics.module';
 
 @Module({
   imports: [
@@ -50,6 +54,10 @@ import { CareerProfileModule } from './modules/career-profile/career-profile.mod
     DocumentModule,
     ReferenceModule,
     CareerProfileModule,
+    JobModule,
+    ApplicationModule,
+    RecruiterWorkspaceModule,
+    RecruitmentAnalyticsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

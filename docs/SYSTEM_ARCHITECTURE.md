@@ -1,26 +1,26 @@
 # System Architecture
 
-## Overview
-RecruitPilot is an enterprise-grade applicant tracking system (ATS) and talent management platform. The architecture is designed to cleanly separate the B2B side (Company/Recruiters) from the B2C side (Candidates) while allowing them to interact securely through shared platform services.
+RecruitPilot is designed as a **Modular Monolith** using **NestJS**. This architecture provides the development speed and simplicity of a monolith while enforcing strict domain boundaries that make it easy to extract microservices in the future.
 
-## Tech Stack
-- **Backend:** NestJS (Node.js)
-- **Language:** TypeScript (Strict mode enabled)
-- **Database:** MongoDB (using Mongoose ODM)
-- **Authentication:** Passport.js (JWT)
-- **Storage:** S3-compatible provider abstraction (AWS S3 / Cloudflare R2)
+## High-Level Architecture
 
-## Architectural Patterns
+The system is divided into three primary layers:
 
-### 1. Modular Monolith
-The backend is structured as a modular monolith. Business domains are strictly isolated into distinct modules (e.g., `CandidateModule`, `CompanyModule`, `DocumentModule`). Modules expose specific services and communicate with each other via Dependency Injection and event-driven hooks, preventing tight coupling.
+1. **API Layer (Controllers & DTOs):** Handles HTTP requests, input validation, and JWT authentication.
+2. **Service Layer (Business Logic):** Enforces business rules and orchestrates data fetching.
+3. **Data Access Layer (Mongoose/MongoDB):** Handles persistence, utilizing advanced aggregation pipelines for analytics.
 
-### 2. Multi-Tenancy & Isolation
-- **Company Workspaces:** B2B users belong to specific `Workspaces` (tenants). Data is strictly isolated using an `organizationId` reference.
-- **Candidate Profiles:** Candidates exist globally and completely independently of any specific company. They own their data and grant access via applications.
+## Key Architectural Patterns
 
-### 3. Event-Driven Architecture
-To prevent deep nesting and tight coupling (e.g., the `CandidateModule` directly writing to the `TimelineModule`), the system heavily leverages `EventEmitter2`. Domain actions fire events (like `PROFILE_UPDATED`), which are asynchronously consumed by side-effect modules (like Audit Logs and Timeline).
+### 1. Modular Domain Driven Design (DDD)
+The application is split into distinct domain modules (`JobModule`, `ApplicationModule`, `CandidateModule`, `RecruiterWorkspaceModule`). Modules encapsulate their own schemas, controllers, and services. 
 
-### 4. Storage Abstraction
-File storage uses an Adapter pattern (`StorageService`). The business logic interacts with a generic `StorageInterface`, allowing the underlying provider (local disk, AWS S3, Cloudflare R2) to be swapped via configuration without touching domain code.
+### 2. Event-Driven Decoupling
+To prevent tight coupling between domains, we utilize `@nestjs/event-emitter`. When a candidate applies for a job, the `ApplicationModule` fires an `ApplicationSubmittedEvent`. Other modules (like `TimelineModule` for auditing, or future Notification modules) listen to these events asynchronously without blocking the core request lifecycle.
+
+### 3. Aggregation Services vs. Core Services
+- **Core Services** (e.g., `ApplicationService`) handle strict CRUD and lifecycle transitions for a single entity.
+- **Aggregation Services** (e.g., `WorkspaceAggregatorService`) sit above core services. They fetch data from multiple domains (Job, Application, Timeline, Candidate) to construct massive, unified payloads for the frontend, eliminating N+1 API requests on the client.
+
+### 4. Immutable Snapshots
+Instead of relying strictly on foreign keys, the system embeds point-in-time snapshots of entities (e.g., embedding a Candidate profile snapshot inside an Application). This prevents historical applications from changing if a candidate updates their profile months later.
