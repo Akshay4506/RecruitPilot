@@ -24,6 +24,10 @@ import { JobModule } from './modules/job/job.module';
 import { ApplicationModule } from './modules/application/application.module';
 import { RecruiterWorkspaceModule } from './modules/recruiter-workspace/recruiter-workspace.module';
 import { RecruitmentAnalyticsModule } from './modules/recruitment-analytics/recruitment-analytics.module';
+import { InterviewModule } from './modules/interview/interview.module';
+import { SchedulingModule } from './modules/scheduling/scheduling.module';
+import { InterviewTemplateModule } from './modules/interview-template/interview-template.module';
+import { InterviewAnalyticsModule } from './modules/interview-analytics/interview-analytics.module';
 
 @Module({
   imports: [
@@ -58,6 +62,10 @@ import { RecruitmentAnalyticsModule } from './modules/recruitment-analytics/recr
     ApplicationModule,
     RecruiterWorkspaceModule,
     RecruitmentAnalyticsModule,
+    InterviewModule,
+    SchedulingModule,
+    InterviewTemplateModule,
+    InterviewAnalyticsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

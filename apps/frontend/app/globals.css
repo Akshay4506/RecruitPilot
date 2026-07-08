@@ -1,0 +1,545 @@
+/**
+ * RecruitPilot Design System
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Single source of truth for all design tokens.
+ *
+ * Architecture (Tailwind v4 CSS-first):
+ *   @theme  — Registers tokens as Tailwind utility classes (bg-brand-500, etc.)
+ *   :root   — CSS custom properties for semantic, theme-aware values
+ *   .dark   — Dark mode overrides for semantic properties
+ *
+ * Token layers:
+ *   1. Primitive palette   → --color-brand-*, --color-neutral-*, etc.
+ *   2. Semantic roles       → --color-background, --color-foreground, etc.
+ *   3. Component tokens     → --radius, --sidebar-width, etc.
+ */
+
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   GOOGLE FONTS
+   Loaded via next/font in lib/fonts.ts for performance.
+   Variables are injected by the root layout.
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   @THEME — PRIMITIVE DESIGN TOKENS
+   These become Tailwind utility classes: bg-brand-500, text-neutral-800, etc.
+   All values here are static — they don't change between light/dark mode.
+   Theme-aware colors are handled via CSS variables in :root / .dark below.
+───────────────────────────────────────────────────────────────────────────── */
+
+@theme {
+
+  /* ── BRAND PALETTE ─────────────────────────────────────────────────────── */
+  /* Primary brand color: Deep Indigo — inspired by Linear, Vercel */
+  --color-brand-50:  #eef0ff;
+  --color-brand-100: #e0e3ff;
+  --color-brand-200: #c7ccff;
+  --color-brand-300: #a5adff;
+  --color-brand-400: #8182ff;
+  --color-brand-500: #6366f1; /* Primary action color */
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-800: #3730a3;
+  --color-brand-900: #312e81;
+  --color-brand-950: #1e1b4b;
+
+  /* ── NEUTRAL PALETTE ───────────────────────────────────────────────────── */
+  /* Cool grays — slightly blue-tinted, premium enterprise feel */
+  --color-neutral-0:   #ffffff;
+  --color-neutral-50:  #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-150: #eaeff5;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-850: #172032;
+  --color-neutral-900: #0f172a;
+  --color-neutral-950: #020617;
+
+  /* ── SEMANTIC STATUS PALETTE ───────────────────────────────────────────── */
+  /* Success — Emerald */
+  --color-success-50:  #ecfdf5;
+  --color-success-100: #d1fae5;
+  --color-success-200: #a7f3d0;
+  --color-success-300: #6ee7b7;
+  --color-success-400: #34d399;
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-success-700: #047857;
+  --color-success-800: #065f46;
+  --color-success-900: #064e3b;
+
+  /* Warning — Amber */
+  --color-warning-50:  #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+
+  /* Danger — Rose */
+  --color-danger-50:  #fff1f2;
+  --color-danger-100: #ffe4e6;
+  --color-danger-200: #fecdd3;
+  --color-danger-300: #fda4af;
+  --color-danger-400: #fb7185;
+  --color-danger-500: #f43f5e;
+  --color-danger-600: #e11d48;
+  --color-danger-700: #be123c;
+  --color-danger-800: #9f1239;
+  --color-danger-900: #881337;
+
+  /* Info — Sky */
+  --color-info-50:  #f0f9ff;
+  --color-info-100: #e0f2fe;
+  --color-info-200: #bae6fd;
+  --color-info-300: #7dd3fc;
+  --color-info-400: #38bdf8;
+  --color-info-500: #0ea5e9;
+  --color-info-600: #0284c7;
+  --color-info-700: #0369a1;
+  --color-info-800: #075985;
+  --color-info-900: #0c4a6e;
+
+  /* ── SEMANTIC COLORS (CSS var bridges) ─────────────────────────────────── */
+  /* These map Tailwind classes to CSS variables for theme-aware usage */
+  --color-background:           hsl(var(--background));
+  --color-foreground:           hsl(var(--foreground));
+  --color-card:                 hsl(var(--card));
+  --color-card-foreground:      hsl(var(--card-foreground));
+  --color-popover:              hsl(var(--popover));
+  --color-popover-foreground:   hsl(var(--popover-foreground));
+  --color-primary:              hsl(var(--primary));
+  --color-primary-foreground:   hsl(var(--primary-foreground));
+  --color-secondary:            hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted:                hsl(var(--muted));
+  --color-muted-foreground:     hsl(var(--muted-foreground));
+  --color-accent:               hsl(var(--accent));
+  --color-accent-foreground:    hsl(var(--accent-foreground));
+  --color-destructive:          hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border:               hsl(var(--border));
+  --color-input:                hsl(var(--input));
+  --color-ring:                 hsl(var(--ring));
+  --color-sidebar:              hsl(var(--sidebar));
+  --color-sidebar-foreground:   hsl(var(--sidebar-foreground));
+  --color-sidebar-border:       hsl(var(--sidebar-border));
+  --color-sidebar-accent:       hsl(var(--sidebar-accent));
+
+  /* ── TYPOGRAPHY ────────────────────────────────────────────────────────── */
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+
+  /* Font sizes — 4px baseline grid */
+  --text-2xs:  0.625rem;   /* 10px */
+  --text-xs:   0.75rem;    /* 12px */
+  --text-sm:   0.875rem;   /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg:   1.125rem;   /* 18px */
+  --text-xl:   1.25rem;    /* 20px */
+  --text-2xl:  1.5rem;     /* 24px */
+  --text-3xl:  1.875rem;   /* 30px */
+  --text-4xl:  2.25rem;    /* 36px */
+  --text-5xl:  3rem;       /* 48px */
+  --text-6xl:  3.75rem;    /* 60px */
+
+  /* Font weights */
+  --font-weight-light:    300;
+  --font-weight-normal:   400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+  --font-weight-extrabold: 800;
+
+  /* Line heights */
+  --leading-none:    1;
+  --leading-tight:   1.25;
+  --leading-snug:    1.375;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose:   2;
+
+  /* Letter spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight:   -0.025em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.025em;
+  --tracking-wider:   0.05em;
+  --tracking-widest:  0.1em;
+
+  /* ── SPACING SCALE (4px base grid) ────────────────────────────────────── */
+  /* Tailwind v4 default spacing is already a 4px grid.               */
+  /* These extend it with named semantic spacing tokens.              */
+  --spacing-px:   1px;
+  --spacing-0:    0px;
+  --spacing-0-5:  0.125rem;  /* 2px  */
+  --spacing-1:    0.25rem;   /* 4px  */
+  --spacing-1-5:  0.375rem;  /* 6px  */
+  --spacing-2:    0.5rem;    /* 8px  */
+  --spacing-2-5:  0.625rem;  /* 10px */
+  --spacing-3:    0.75rem;   /* 12px */
+  --spacing-3-5:  0.875rem;  /* 14px */
+  --spacing-4:    1rem;      /* 16px */
+  --spacing-5:    1.25rem;   /* 20px */
+  --spacing-6:    1.5rem;    /* 24px */
+  --spacing-7:    1.75rem;   /* 28px */
+  --spacing-8:    2rem;      /* 32px */
+  --spacing-9:    2.25rem;   /* 36px */
+  --spacing-10:   2.5rem;    /* 40px */
+  --spacing-11:   2.75rem;   /* 44px */
+  --spacing-12:   3rem;      /* 48px */
+  --spacing-14:   3.5rem;    /* 56px */
+  --spacing-16:   4rem;      /* 64px */
+  --spacing-20:   5rem;      /* 80px */
+  --spacing-24:   6rem;      /* 96px */
+  --spacing-28:   7rem;      /* 112px */
+  --spacing-32:   8rem;      /* 128px */
+  --spacing-36:   9rem;      /* 144px */
+  --spacing-40:   10rem;     /* 160px */
+  --spacing-48:   12rem;     /* 192px */
+  --spacing-56:   14rem;     /* 224px */
+  --spacing-64:   16rem;     /* 256px */
+
+  /* Layout */
+  --spacing-sidebar:           240px; /* Default sidebar width */
+  --spacing-sidebar-collapsed: 64px;  /* Collapsed sidebar width */
+  --spacing-header:            60px;  /* Top header height */
+
+  /* ── BORDER RADIUS ─────────────────────────────────────────────────────── */
+  --radius-none: 0px;
+  --radius-xs:   0.125rem;  /* 2px  */
+  --radius-sm:   0.25rem;   /* 4px  */
+  --radius-md:   0.375rem;  /* 6px  — default for most inputs */
+  --radius-lg:   0.5rem;    /* 8px  — cards, modals */
+  --radius-xl:   0.75rem;   /* 12px — large cards */
+  --radius-2xl:  1rem;      /* 16px — sheets, drawers */
+  --radius-3xl:  1.5rem;    /* 24px — pill-like containers */
+  --radius-full: 9999px;    /* Pill / circle */
+
+  /* Semantic radius bridge → from CSS var (can be remapped per theme) */
+  --radius: var(--default-radius);
+
+  /* ── SHADOWS ───────────────────────────────────────────────────────────── */
+  --shadow-xs:       0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm:       0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-md:       0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-lg:       0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-xl:       0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.04);
+  --shadow-2xl:      0 25px 50px -12px rgb(0 0 0 / 0.15);
+  --shadow-inner:    inset 0 2px 4px 0 rgb(0 0 0 / 0.06);
+  --shadow-none:     none;
+  /* Brand glow — used for focused primary elements */
+  --shadow-glow-sm:  0 0 0 3px rgb(99 102 241 / 0.2);
+  --shadow-glow:     0 0 20px rgb(99 102 241 / 0.25), 0 0 0 1px rgb(99 102 241 / 0.15);
+  --shadow-glow-lg:  0 0 40px rgb(99 102 241 / 0.3), 0 0 0 1px rgb(99 102 241 / 0.2);
+  /* Dark mode softer shadows */
+  --shadow-dark-sm:  0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.2);
+  --shadow-dark-md:  0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-dark-lg:  0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+
+  /* ── Z-INDEX SCALE ─────────────────────────────────────────────────────── */
+  --z-below:   -1;
+  --z-base:    0;
+  --z-raised:  1;
+  --z-sticky:  10;
+  --z-overlay: 20;
+  --z-dropdown: 30;
+  --z-modal:   40;
+  --z-popover: 50;
+  --z-tooltip: 60;
+  --z-toast:   70;
+  --z-top:     9999;
+
+  /* ── ANIMATION DURATIONS & EASINGS ────────────────────────────────────── */
+  --duration-instant:  0ms;
+  --duration-fast:     100ms;
+  --duration-normal:   200ms;
+  --duration-slow:     300ms;
+  --duration-slower:   500ms;
+  --duration-slowest:  700ms;
+
+  --ease-linear:     linear;
+  --ease-in:         cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:        cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out:     cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1); /* Overshoot spring */
+  --ease-bounce:     cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ── KEYFRAME ANIMATIONS ───────────────────────────────────────────────── */
+  --animate-fade-in:       fade-in var(--duration-normal) var(--ease-out);
+  --animate-fade-in-up:    fade-in-up var(--duration-slow) var(--ease-out);
+  --animate-fade-out:      fade-out var(--duration-fast) var(--ease-in);
+  --animate-slide-in-left:  slide-in-left var(--duration-slow) var(--ease-out);
+  --animate-slide-in-right: slide-in-right var(--duration-slow) var(--ease-out);
+  --animate-slide-up:       slide-up var(--duration-slow) var(--ease-out);
+  --animate-shimmer:        shimmer 2s linear infinite;
+  --animate-pulse-soft:     pulse-soft 2s var(--ease-in-out) infinite;
+  --animate-spin-slow:      spin 3s linear infinite;
+  --animate-bounce-soft:    bounce-soft 1s var(--ease-spring) infinite;
+  --animate-accordion-down: accordion-down var(--duration-normal) var(--ease-out);
+  --animate-accordion-up:   accordion-up var(--duration-normal) var(--ease-out);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   KEYFRAME DEFINITIONS
+───────────────────────────────────────────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0);      }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-4px); }
+}
+
+@keyframes accordion-down {
+  from { height: 0; overflow: hidden; }
+  to   { height: var(--radix-accordion-content-height); overflow: hidden; }
+}
+
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); overflow: hidden; }
+  to   { height: 0; overflow: hidden; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LIGHT THEME — Semantic CSS Custom Properties
+   These change between light and dark. Components reference them via hsl().
+───────────────────────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+
+  /* ── Component Radius (remappable) ── */
+  --default-radius: 0.5rem; /* 8px */
+
+  /* ── Core Backgrounds ── */
+  --background:        0 0% 99%;         /* Near white — #fcfcfc */
+  --foreground:        222 47% 9%;       /* Near black with blue tint */
+
+  /* ── Surface Layers ── */
+  --card:              0 0% 100%;        /* Pure white cards */
+  --card-foreground:   222 47% 9%;
+  --popover:           0 0% 100%;
+  --popover-foreground: 222 47% 9%;
+
+  /* ── Brand / Primary Action ── */
+  --primary:           239 84% 67%;      /* Indigo-500 #6366f1 */
+  --primary-foreground: 0 0% 100%;       /* White on primary */
+
+  /* ── Secondary Surface ── */
+  --secondary:         220 14% 96%;      /* Neutral-100 */
+  --secondary-foreground: 222 47% 9%;
+
+  /* ── Muted / Subdued ── */
+  --muted:             220 14% 96%;      /* Same as secondary */
+  --muted-foreground:  220 9% 46%;       /* Neutral-500 */
+
+  /* ── Accent ── */
+  --accent:            239 84% 97%;      /* Indigo-50 tint */
+  --accent-foreground: 239 84% 40%;      /* Indigo-800 */
+
+  /* ── Destructive ── */
+  --destructive:       347 83% 58%;      /* Rose-500 */
+  --destructive-foreground: 0 0% 100%;
+
+  /* ── Borders & Inputs ── */
+  --border:            220 13% 91%;      /* Neutral-200 */
+  --input:             220 13% 91%;
+  --ring:              239 84% 67%;      /* Same as primary */
+
+  /* ── Sidebar ── */
+  --sidebar:           220 20% 97%;      /* Slightly off-white */
+  --sidebar-foreground: 222 47% 9%;
+  --sidebar-border:    220 13% 91%;
+  --sidebar-accent:    239 84% 67%;
+
+  /* ── Semantic Status (light) ── */
+  --success:     158 64% 38%;   /* Emerald-600 */
+  --success-bg:  152 81% 96%;   /* Emerald-50 */
+  --warning:     38 92% 50%;    /* Amber-500 */
+  --warning-bg:  48 96% 95%;    /* Amber-50 */
+  --danger:      347 83% 58%;   /* Rose-500 */
+  --danger-bg:   356 100% 97%;  /* Rose-50 */
+  --info:        199 89% 48%;   /* Sky-500 */
+  --info-bg:     204 100% 97%;  /* Sky-50 */
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   DARK THEME — Semantic overrides
+───────────────────────────────────────────────────────────────────────────── */
+.dark {
+  color-scheme: dark;
+
+  /* ── Core Backgrounds ── */
+  --background:        222 47% 5%;       /* Near black #080d18 */
+  --foreground:        213 31% 91%;      /* Off-white */
+
+  /* ── Surface Layers ── */
+  --card:              222 47% 7%;       /* Slightly lighter than bg */
+  --card-foreground:   213 31% 91%;
+  --popover:           222 47% 6%;
+  --popover-foreground: 213 31% 91%;
+
+  /* ── Brand / Primary Action ── */
+  --primary:           239 84% 67%;      /* Same indigo — visible on dark */
+  --primary-foreground: 0 0% 100%;
+
+  /* ── Secondary Surface ── */
+  --secondary:         215 27% 14%;      /* Dark slate */
+  --secondary-foreground: 213 31% 91%;
+
+  /* ── Muted ── */
+  --muted:             215 27% 12%;
+  --muted-foreground:  215 16% 55%;      /* Neutral-400 equivalent */
+
+  /* ── Accent ── */
+  --accent:            239 50% 15%;      /* Dark indigo tint */
+  --accent-foreground: 239 84% 75%;      /* Lighter indigo */
+
+  /* ── Destructive ── */
+  --destructive:       347 70% 50%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* ── Borders & Inputs ── */
+  --border:            215 27% 16%;      /* Dark border */
+  --input:             215 27% 16%;
+  --ring:              239 84% 67%;
+
+  /* ── Sidebar ── */
+  --sidebar:           222 47% 4%;       /* Darkest layer — sidebar bg */
+  --sidebar-foreground: 213 31% 85%;
+  --sidebar-border:    215 27% 12%;
+  --sidebar-accent:    239 84% 67%;
+
+  /* ── Semantic Status (dark) ── */
+  --success:     158 64% 52%;   /* Brighter emerald */
+  --success-bg:  158 64% 8%;    /* Very dark emerald */
+  --warning:     38 92% 55%;
+  --warning-bg:  38 92% 8%;
+  --danger:      347 83% 65%;
+  --danger-bg:   347 83% 8%;
+  --info:        199 89% 55%;
+  --info-bg:     199 89% 8%;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE RESETS & GLOBAL STYLES
+───────────────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Smooth scrolling — respects prefers-reduced-motion */
+  scroll-behavior: smooth;
+  /* Text rendering */
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent layout shift from scrollbar */
+  overflow-y: scroll;
+  min-height: 100dvh;
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--border));
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground) / 0.4);
+}
+
+/* ── Focus Rings ── */
+:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Selection ── */
+::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
+}
+
+/* ── Media: Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
