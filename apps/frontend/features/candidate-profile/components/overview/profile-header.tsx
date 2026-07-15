@@ -16,55 +16,59 @@ export function ProfileHeader({ profile, onEdit }: ProfileHeaderProps) {
     <Card className="overflow-hidden border-none shadow-sm bg-[hsl(var(--card))]">
       <div className="h-32 bg-gradient-to-r from-[hsl(var(--primary)/0.8)] to-[hsl(var(--primary)/0.4)]" />
       <CardContent className="relative pt-0 sm:pt-0">
-        <div className="flex flex-col sm:flex-row gap-6 sm:items-end -mt-12 sm:-mt-16 mb-4">
-          <Avatar 
-            src={profile.avatarUrl} 
-            alt={profile.fullName} 
-            size="xl" 
-            className="border-4 border-[hsl(var(--background))] bg-[hsl(var(--background))] shadow-sm"
-          />
-          <div className="flex-1 space-y-1.5 pb-2">
-            <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-bold tracking-tight text-[hsl(var(--foreground))]">
-                {profile.fullName}
-              </h1>
-              {profile.status === "ACTIVE" && (
-                <Badge variant="success" size="sm" className="hidden sm:inline-flex">Open to Work</Badge>
-              )}
-            </div>
-            <p className="text-base font-medium text-[hsl(var(--foreground))]">
-              {profile.headline}
-            </p>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[hsl(var(--muted-foreground))]">
-              {profile.location && (
-                <div className="flex items-center gap-1.5">
-                  <MapPin className="h-4 w-4" />
-                  {profile.location}
-                </div>
-              )}
-              {profile.experience.find(e => e.isCurrent) && (
-                <div className="flex items-center gap-1.5">
-                  <Briefcase className="h-4 w-4" />
-                  {profile.experience.find(e => e.isCurrent)?.title} at {profile.experience.find(e => e.isCurrent)?.company}
-                </div>
-              )}
-              <div className="flex items-center gap-1.5 text-[hsl(var(--success))]">
-                <CheckCircle2 className="h-4 w-4" />
-                Verified Email
-              </div>
-            </div>
+        <div className="flex flex-col gap-4 mb-4 relative">
+          <div className="-mt-12 sm:-mt-16">
+            <Avatar 
+              src={profile.avatarUrl} 
+              alt={profile.fullName} 
+              className="w-24 h-24 sm:w-32 sm:h-32 border-4 border-[hsl(var(--background))] bg-[hsl(var(--background))] shadow-sm"
+            />
           </div>
           
-          <div className="flex flex-wrap items-center gap-3 pb-2 sm:pb-4">
-            <Button variant="outline" size="sm" leftIcon={<Share2 className="h-4 w-4" />}>
-              Share
-            </Button>
-            <Button variant="outline" size="sm" leftIcon={<Download className="h-4 w-4" />}>
-              Resume
-            </Button>
-            <Button variant="primary" size="sm" leftIcon={<Edit3 className="h-4 w-4" />} onClick={onEdit}>
-              Edit Profile
-            </Button>
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div className="flex-1 min-w-0 space-y-1.5">
+              <div className="flex flex-wrap items-center gap-3">
+                <h1 className="text-2xl font-bold tracking-tight text-[hsl(var(--foreground))] truncate">
+                  {profile.fullName}
+                </h1>
+                {profile.status === "ACTIVE" && (
+                  <Badge variant="success" size="sm" className="hidden sm:inline-flex whitespace-nowrap">Open to Work</Badge>
+                )}
+              </div>
+              <p className="text-base font-medium text-[hsl(var(--foreground))]">
+                {profile.headline}
+              </p>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-[hsl(var(--muted-foreground))] mt-2">
+                {profile.location && (
+                  <div className="flex items-center gap-1.5">
+                    <MapPin className="h-4 w-4 shrink-0" />
+                    {profile.location}
+                  </div>
+                )}
+                {profile.experience.find(e => e.isCurrent) && (
+                  <div className="flex items-center gap-1.5">
+                    <Briefcase className="h-4 w-4 shrink-0" />
+                    <span className="truncate">{profile.experience.find(e => e.isCurrent)?.title} at {profile.experience.find(e => e.isCurrent)?.company}</span>
+                  </div>
+                )}
+                <div className="flex items-center gap-1.5 text-[hsl(var(--success))] shrink-0">
+                  <CheckCircle2 className="h-4 w-4" />
+                  Verified Email
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <Button variant="outline" size="sm" leftIcon={<Share2 className="h-4 w-4" />}>
+                Share
+              </Button>
+              <Button variant="outline" size="sm" leftIcon={<Download className="h-4 w-4" />}>
+                Resume
+              </Button>
+              <Button variant="primary" size="sm" leftIcon={<Edit3 className="h-4 w-4" />} onClick={onEdit}>
+                Edit Profile
+              </Button>
+            </div>
           </div>
         </div>
       </CardContent>

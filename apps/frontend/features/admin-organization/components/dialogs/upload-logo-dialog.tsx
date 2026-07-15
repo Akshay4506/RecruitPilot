@@ -23,7 +23,7 @@ export function UploadLogoDialog({ isOpen, onClose }: UploadLogoDialogProps) {
           <FileUpload 
             accept="image/png,image/jpeg,image/svg+xml" 
             maxSize={2 * 1024 * 1024} 
-            onFilesSelected={(files: File[]) => console.log(files)}
+            onFilesSelected={(files: File[]) => void 0}
             description="Upload PNG, JPG, or SVG (max 2MB)"
           />
         </div>

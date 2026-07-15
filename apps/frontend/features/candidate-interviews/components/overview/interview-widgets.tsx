@@ -4,6 +4,7 @@ import { format, differenceInDays, isPast } from "date-fns";
 import { Video, MapPin, Calendar, Clock, CheckCircle2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { EmptyState } from "@/components/display/empty-state";
 
 interface InterviewWidgetsProps {
   interviews: Interview[];
@@ -67,9 +68,12 @@ export function InterviewWidgets({ interviews }: InterviewWidgetsProps) {
             </Button>
           </div>
         ) : (
-          <div className="text-center py-6">
-            <p className="text-sm text-[hsl(var(--muted-foreground))]">No upcoming interviews</p>
-          </div>
+          <EmptyState
+            type="interviews"
+            title="No upcoming interviews"
+            size="sm"
+            className="py-4"
+          />
         )}
       </div>
 
@@ -102,9 +106,13 @@ export function InterviewWidgets({ interviews }: InterviewWidgetsProps) {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-[hsl(var(--muted-foreground))] text-center py-4">
-            No past interviews found.
-          </p>
+          <EmptyState
+            type="interviews"
+            title="No History"
+            description="No past interviews found."
+            size="sm"
+            className="py-4"
+          />
         )}
       </div>
 

@@ -4,13 +4,17 @@ import * as React from "react";
 import { AdminDashboardHero } from "./components/overview/admin-dashboard-hero";
 import { AdminMetrics } from "./components/overview/admin-metrics";
 import { PlatformSummary } from "./components/overview/platform-summary";
-import { OrganizationGrowth } from "./components/analytics/organization-growth";
-import { UserDistribution } from "./components/analytics/user-distribution";
-import { WorkspaceActivity } from "./components/analytics/workspace-activity";
-import { PendingApprovals } from "./components/approvals/pending-approvals";
 import { RecentActivity } from "./components/activity/recent-activity";
-import { AIPlatformInsights } from "./components/system/ai-platform-insights";
 import { AdminSidebar } from "./components/sidebar/admin-sidebar";
+import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/loaders/skeleton";
+
+// Lazy loaded heavy components
+const OrganizationGrowth = dynamic(() => import("./components/analytics/organization-growth").then(mod => mod.OrganizationGrowth), { ssr: false, loading: () => <Skeleton className="w-full h-[300px] rounded-xl" /> });
+const UserDistribution = dynamic(() => import("./components/analytics/user-distribution").then(mod => mod.UserDistribution), { ssr: false, loading: () => <Skeleton className="w-full h-[300px] rounded-xl" /> });
+const WorkspaceActivity = dynamic(() => import("./components/analytics/workspace-activity").then(mod => mod.WorkspaceActivity), { ssr: false, loading: () => <Skeleton className="w-full h-[300px] rounded-xl" /> });
+const PendingApprovals = dynamic(() => import("./components/approvals/pending-approvals").then(mod => mod.PendingApprovals), { ssr: false, loading: () => <Skeleton className="w-full h-[300px] rounded-xl" /> });
+const AIPlatformInsights = dynamic(() => import("./components/system/ai-platform-insights").then(mod => mod.AIPlatformInsights), { ssr: false, loading: () => <Skeleton className="w-full h-[300px] rounded-xl" /> });
 
 import { 
   mockAdminMetrics,

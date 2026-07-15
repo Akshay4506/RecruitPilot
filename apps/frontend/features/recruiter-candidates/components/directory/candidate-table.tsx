@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import * as React from "react";
@@ -99,8 +100,10 @@ export function CandidateTable({ candidates, onPreview }: CandidateTableProps) {
     <div className="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-xl overflow-hidden shadow-sm">
       <DataTable 
         data={candidates} 
-        columns={columns}
+        columns={columns as any}
         keyField="id" 
+        selectable={true}
+        virtualized={true}
       />
     </div>
   );

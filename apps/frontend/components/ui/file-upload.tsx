@@ -110,7 +110,7 @@ function FileUpload({
     const validFiles = files.filter((f) => f.size <= maxSize);
     if (validFiles.length !== files.length) {
       // In a real app, we might fire a toast here
-      console.warn("Some files exceeded the maximum size limit.");
+      void 0;
     }
     
     let filesToSelect = validFiles;

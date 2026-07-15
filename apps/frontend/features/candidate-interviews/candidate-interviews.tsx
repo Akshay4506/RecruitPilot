@@ -38,7 +38,7 @@ export function CandidateInterviews() {
   };
 
   const confirmAttendance = () => {
-    console.log("Confirmed attendance for", confirmDialog.interview?.id);
+    void 0;
     setConfirmDialog({ isOpen: false, interview: null });
   };
 

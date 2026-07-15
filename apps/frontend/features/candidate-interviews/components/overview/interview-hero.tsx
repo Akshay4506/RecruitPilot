@@ -42,7 +42,7 @@ export function InterviewHero({ interviews }: InterviewHeroProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 2xl:grid-cols-4 gap-4">
         <MetricCard 
           title="Upcoming" 
           value={upcoming.toString()} 

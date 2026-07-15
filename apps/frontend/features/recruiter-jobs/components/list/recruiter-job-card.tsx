@@ -4,7 +4,7 @@ import { Card } from "@/components/cards/card";
 import { Avatar } from "@/components/ui/avatar";
 import { JobStatusChip } from "../display/job-status-chip";
 import { Button } from "@/components/ui/button";
-import { MapPin, Briefcase, Clock, Users, MoreVertical } from "lucide-react";
+import { MapPin, Briefcase, Clock, Users, Edit } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
@@ -72,8 +72,10 @@ export function RecruiterJobCard({ job, onPreview }: RecruiterJobCardProps) {
             Preview
           </Button>
         </div>
-        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-          <MoreVertical className="h-4 w-4" />
+        <Button variant="ghost" size="sm" className="h-8 w-8 p-0" asChild>
+          <Link href={ROUTES.recruiter.jobEdit(job.id)} title="Edit Job">
+            <Edit className="h-4 w-4" />
+          </Link>
         </Button>
       </div>
     </Card>

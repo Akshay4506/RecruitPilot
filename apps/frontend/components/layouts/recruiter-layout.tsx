@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { ShellLayout } from "./shell-layout";
 import { recruiterNav } from "@/config/nav.config";
 import type { ShellLayoutProps } from "./shell-layout";
@@ -22,6 +23,8 @@ function RecruiterLayout({
   headerProps = {},
   ...props
 }: RecruiterLayoutProps) {
+  const router = useRouter();
+
   return (
     <ShellLayout
       navConfig={recruiterNav}
@@ -33,6 +36,8 @@ function RecruiterLayout({
         onWorkspaceSwitch,
         notificationCount,
         showSearch: true,
+        onProfile: () => router.push("/recruiter/profile"),
+        onSettings: () => router.push("/recruiter/settings"),
         ...headerProps,
       }}
       {...props}

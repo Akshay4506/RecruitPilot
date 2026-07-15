@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useDebounce } from "@/hooks/use-debounce";
 
 export interface SearchInputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
@@ -8,8 +9,10 @@ export interface SearchInputProps
   defaultValue?: string;
   /** Controlled value */
   value?: string;
-  /** Callback for value changes */
+  /** Callback for value changes (instant) */
   onChange?: (value: string) => void;
+  /** Callback for value changes (debounced) */
+  onDebouncedChange?: (value: string) => void;
   /** Callback for when the user hits Enter or clicks the search icon (if we make it a button) */
   onSearch?: (value: string) => void;
   /** Show a clear (X) button when there is text */
@@ -57,6 +60,14 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
     const isControlled = value !== undefined;
     const displayValue = isControlled ? value : internalValue;
+
+    const debouncedValue = useDebounce(displayValue, 300);
+
+    React.useEffect(() => {
+      if (props.onDebouncedChange) {
+        props.onDebouncedChange(debouncedValue);
+      }
+    }, [debouncedValue, props.onDebouncedChange]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const val = e.target.value;

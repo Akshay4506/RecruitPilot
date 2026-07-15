@@ -38,7 +38,7 @@ export function RecruiterJobs() {
       </motion.div>
 
       <motion.div variants={fadeUp} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-xl p-4 shadow-sm">
-        <div className="flex-1 w-full max-w-xl flex flex-col sm:flex-row gap-4">
+        <div className="flex-1 w-full flex flex-col xl:flex-row gap-4">
           <RecruiterJobSearch />
           <RecruiterJobFilters />
         </div>

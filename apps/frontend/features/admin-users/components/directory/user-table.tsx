@@ -97,6 +97,7 @@ export function UserTable({ users, onSelect, onRowClick }: UserTableProps) {
       data={users}
       keyField="id"
       rowActions={rowActions}
+      virtualized={true}
     />
   );
 }

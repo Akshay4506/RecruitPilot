@@ -2,6 +2,7 @@ import * as React from "react";
 import { DocumentCard, DocumentCardSkeleton } from "./document-card";
 import { DocumentFilters } from "./document-filters";
 import { CandidateDocument } from "../../types";
+import { EmptyState } from "@/components/display/empty-state";
 
 interface DocumentLibraryProps {
   documents: CandidateDocument[];
@@ -64,7 +65,7 @@ export function DocumentLibrary({ documents, onPreview, onDownload, onRename, on
       </div>
 
       {filteredDocuments.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {filteredDocuments.map(doc => (
             <DocumentCard 
               key={doc.id} 
@@ -77,9 +78,12 @@ export function DocumentLibrary({ documents, onPreview, onDownload, onRename, on
           ))}
         </div>
       ) : (
-        <div className="py-12 text-center border-2 border-dashed border-[hsl(var(--border))] rounded-xl bg-[hsl(var(--muted)/0.1)]">
-          <p className="text-[hsl(var(--muted-foreground))]">No documents found matching your filters.</p>
-        </div>
+        <EmptyState
+          type="documents"
+          title="No Documents Found"
+          description="No documents found matching your filters."
+          className="border-2 border-dashed border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.1)] rounded-xl"
+        />
       )}
     </div>
   );
@@ -97,7 +101,7 @@ export function DocumentLibrarySkeleton() {
           <div className="h-9 w-32 bg-[hsl(var(--muted))] animate-pulse rounded" />
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {[1, 2, 3, 4].map(i => (
           <DocumentCardSkeleton key={i} />
         ))}

@@ -45,34 +45,36 @@ export function CandidateSummary({ candidate }: { candidate: RecruiterCandidate 
           </h3>
           
           <div className="space-y-4">
-            <div className="flex justify-between items-center pb-3 border-b border-[hsl(var(--border))]">
-              <span className="text-sm text-[hsl(var(--muted-foreground))] flex items-center gap-2">
+            <div className="flex flex-col gap-1.5 pb-3 border-b border-[hsl(var(--border))]">
+              <span className="text-xs font-medium text-[hsl(var(--muted-foreground))] flex items-center gap-2 uppercase tracking-wider">
                 <Target className="h-3.5 w-3.5" /> Priority
               </span>
-              <Badge variant={candidate.metadata.priority === "CRITICAL" ? "destructive" : candidate.metadata.priority === "HIGH" ? "warning" : "neutral"}>
-                {candidate.metadata.priority}
-              </Badge>
+              <div className="font-medium text-[hsl(var(--foreground))]">
+                <Badge variant={candidate.metadata.priority === "CRITICAL" ? "destructive" : candidate.metadata.priority === "HIGH" ? "warning" : "neutral"} className="w-fit">
+                  {candidate.metadata.priority}
+                </Badge>
+              </div>
             </div>
-            <div className="flex justify-between items-center pb-3 border-b border-[hsl(var(--border))]">
-              <span className="text-sm text-[hsl(var(--muted-foreground))] flex items-center gap-2">
+            <div className="flex flex-col gap-1.5 pb-3 border-b border-[hsl(var(--border))]">
+              <span className="text-xs font-medium text-[hsl(var(--muted-foreground))] flex items-center gap-2 uppercase tracking-wider">
                 <Hash className="h-3.5 w-3.5" /> Source
               </span>
-              <span className="text-sm font-medium text-[hsl(var(--foreground))]">{candidate.metadata.source}</span>
+              <span className="text-sm font-medium text-[hsl(var(--foreground))] break-words">{candidate.metadata.source}</span>
             </div>
-            <div className="flex justify-between items-center pb-3 border-b border-[hsl(var(--border))]">
-              <span className="text-sm text-[hsl(var(--muted-foreground))] flex items-center gap-2">
+            <div className="flex flex-col gap-1.5 pb-3 border-b border-[hsl(var(--border))]">
+              <span className="text-xs font-medium text-[hsl(var(--muted-foreground))] flex items-center gap-2 uppercase tracking-wider">
                 <User className="h-3.5 w-3.5" /> Created By
               </span>
-              <span className="text-sm font-medium text-[hsl(var(--foreground))]">{candidate.metadata.createdBy}</span>
+              <span className="text-sm font-medium text-[hsl(var(--foreground))] break-words">{candidate.metadata.createdBy}</span>
             </div>
-            <div className="flex justify-between items-center pb-3 border-b border-[hsl(var(--border))]">
-              <span className="text-sm text-[hsl(var(--muted-foreground))] flex items-center gap-2">
+            <div className="flex flex-col gap-1.5 pb-3 border-b border-[hsl(var(--border))]">
+              <span className="text-xs font-medium text-[hsl(var(--muted-foreground))] flex items-center gap-2 uppercase tracking-wider">
                 <Calendar className="h-3.5 w-3.5" /> Added
               </span>
               <span className="text-sm font-medium text-[hsl(var(--foreground))]">{new Date(candidate.metadata.createdAt).toLocaleDateString()}</span>
             </div>
-            <div className="flex justify-between items-center pb-3 border-b border-[hsl(var(--border))]">
-              <span className="text-sm text-[hsl(var(--muted-foreground))] flex items-center gap-2">
+            <div className="flex flex-col gap-1.5 pb-3 border-b border-[hsl(var(--border))]">
+              <span className="text-xs font-medium text-[hsl(var(--muted-foreground))] flex items-center gap-2 uppercase tracking-wider">
                 <Clock className="h-3.5 w-3.5" /> Last Contact
               </span>
               <span className="text-sm font-medium text-[hsl(var(--foreground))]">{formatRelativeTime(candidate.metadata.lastContactAt)}</span>

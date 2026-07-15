@@ -36,16 +36,12 @@ import { PlatformAlerts } from "./components/operations/monitoring/platform-aler
 
 // Audit
 import { AuditTable } from "./components/audit/audit-table";
-import { AuditDetailsDrawer } from "./components/audit/audit-details-drawer";
 
 // Flags
 import { FeatureFlagsTable } from "./components/flags/feature-flags-table";
-import { FlagEditor } from "./components/flags/flag-editor";
 
 // Email
 import { EmailTemplateList } from "./components/email/email-template-list";
-import { EmailTemplateEditor } from "./components/email/email-template-editor";
-import { EmailPreview } from "./components/email/email-preview";
 
 // Storage
 import { StorageOverview } from "./components/storage/storage-overview";
@@ -56,8 +52,15 @@ import { MaintenanceMode } from "./components/maintenance/maintenance-mode";
 import { MaintenanceHistory } from "./components/maintenance/maintenance-history";
 import { SystemSettings } from "./components/configuration/system-settings";
 
-// Dialogs
-import { RestoreBackupDialog } from "./components/dialogs/restore-backup-dialog";
+import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/loaders/skeleton";
+
+// Lazy Loaded Drawers and Dialogs
+const AuditDetailsDrawer = dynamic(() => import("./components/audit/audit-details-drawer").then(mod => mod.AuditDetailsDrawer), { ssr: false });
+const FlagEditor = dynamic(() => import("./components/flags/flag-editor").then(mod => mod.FlagEditor), { ssr: false });
+const EmailTemplateEditor = dynamic(() => import("./components/email/email-template-editor").then(mod => mod.EmailTemplateEditor), { ssr: false });
+const EmailPreview = dynamic(() => import("./components/email/email-preview").then(mod => mod.EmailPreview), { ssr: false });
+const RestoreBackupDialog = dynamic(() => import("./components/dialogs/restore-backup-dialog").then(mod => mod.RestoreBackupDialog), { ssr: false });
 
 import { Activity, Shield, ToggleLeft, Mail, HardDrive, Wrench, Settings } from "lucide-react";
 

@@ -25,47 +25,34 @@ export function RecentApplicationsList({ applications }: RecentApplicationsListP
       <div className="space-y-3">
         {applications.map(app => (
           <Link key={app.id} href={ROUTES.recruiter.application(app.id)} className="block group">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg border border-[hsl(var(--border))] hover:border-[hsl(var(--primary)/0.5)] hover:bg-[hsl(var(--muted)/0.2)] transition-all">
+            <div className="flex items-center justify-between gap-3 p-4 rounded-lg border border-[hsl(var(--border))] hover:border-[hsl(var(--primary)/0.5)] hover:bg-[hsl(var(--muted)/0.2)] transition-all">
               
-              <div className="flex items-center gap-4 min-w-0">
+              <div className="flex items-center gap-3 min-w-0">
                 <Avatar 
                   src={app.candidateAvatarUrl} 
                   name={app.candidateName} 
-                  className="h-10 w-10 border border-[hsl(var(--border))]"
+                  className="h-10 w-10 shrink-0 border border-[hsl(var(--border))]"
                 />
-                <div className="min-w-0">
+                <div className="min-w-0 flex flex-col">
                   <h4 className="font-semibold text-[hsl(var(--foreground))] text-sm truncate group-hover:text-[hsl(var(--primary))] transition-colors">
                     {app.candidateName}
                   </h4>
-                  <p className="text-xs text-[hsl(var(--muted-foreground))] truncate">
-                    Applied for <span className="font-medium text-[hsl(var(--foreground))]">{app.jobTitle}</span>
-                  </p>
+                  <div className="flex items-center gap-1.5 text-xs text-[hsl(var(--muted-foreground))] mt-0.5 truncate">
+                    <span className={`font-semibold ${app.matchScore >= 90 ? 'text-[hsl(var(--success))]' : 'text-[hsl(var(--primary))]'}`}>
+                      {app.matchScore}% Match
+                    </span>
+                    <span>•</span>
+                    <span className="truncate">{app.jobTitle}</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between sm:justify-end gap-6 sm:w-auto">
-                <div className="flex items-center gap-6">
-                  <div className="text-right hidden sm:block">
-                    <p className="text-xs text-[hsl(var(--muted-foreground))] mb-0.5">Match</p>
-                    <p className={`text-sm font-bold ${app.matchScore >= 90 ? 'text-[hsl(var(--success))]' : 'text-[hsl(var(--primary))]'}`}>
-                      {app.matchScore}%
-                    </p>
-                  </div>
-                  <div className="text-right hidden sm:block">
-                    <p className="text-xs text-[hsl(var(--muted-foreground))] mb-0.5">Applied</p>
-                    <p className="text-xs font-medium text-[hsl(var(--foreground))]">
-                      {formatDistanceToNow(new Date(app.appliedAt), { addSuffix: true })}
-                    </p>
-                  </div>
-                  <div>
-                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                    <ApplicationStatusChip status={app.status as any} />
-                  </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <div className="hidden sm:block">
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  <ApplicationStatusChip status={app.status as any} />
                 </div>
-                
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-[hsl(var(--muted-foreground))]" asChild>
-                  <div><ChevronRight className="h-4 w-4" /></div>
-                </Button>
+                <ChevronRight className="h-4 w-4 text-[hsl(var(--muted-foreground))] shrink-0" />
               </div>
 
             </div>

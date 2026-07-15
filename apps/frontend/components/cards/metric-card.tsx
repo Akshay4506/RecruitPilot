@@ -24,8 +24,8 @@ function Trend({ value, label, format = "percent" }: TrendProps) {
     : "text-[hsl(var(--danger))] bg-[hsl(var(--danger-bg))]";
 
   return (
-    <span className={cn("inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium", colorClass)}>
-      <Icon className="h-3 w-3" aria-hidden="true" />
+    <span className={cn("inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap", colorClass)}>
+      <Icon className="h-3 w-3 shrink-0" aria-hidden="true" />
       {format === "percent" ? `${Math.abs(value)}%` : Math.abs(value)}
       {label && <span className="text-current/70 ml-0.5">{label}</span>}
     </span>
@@ -47,7 +47,7 @@ export interface MetricCardProps {
   children?: React.ReactNode; // Optional mini-chart slot
 }
 
-function MetricCard({
+const MetricCardBase = ({
   title,
   value,
   description,
@@ -59,7 +59,7 @@ function MetricCard({
   loading = false,
   className,
   children,
-}: MetricCardProps) {
+}: MetricCardProps) => {
   if (loading) {
     return (
       <Card className={cn("p-5", className)}>
@@ -79,7 +79,7 @@ function MetricCard({
     <Card className={cn("p-5", className)}>
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-[hsl(var(--muted-foreground))] truncate">
+          <p className="text-sm font-medium text-[hsl(var(--muted-foreground))] line-clamp-2">
             {title}
           </p>
           <p className="mt-1.5 text-2xl font-bold text-[hsl(var(--foreground))] tracking-tight">
@@ -122,4 +122,5 @@ function MetricCard({
   );
 }
 
-export { MetricCard, Trend };
+export const MetricCard = React.memo(MetricCardBase);
+export { Trend };

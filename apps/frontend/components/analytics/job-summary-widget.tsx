@@ -49,12 +49,12 @@ export function JobSummaryWidget({
 
   if (variant === "compact") {
     return (
-      <div className={cn("grid grid-cols-2 sm:grid-cols-4 gap-4", className)}>
+      <div className={cn("grid grid-cols-2 sm:grid-cols-3 gap-4", className)}>
         {metrics.map((m, i) => (
-          <div key={i} className="flex flex-col">
+          <div key={i} className="flex flex-col min-w-0">
             <span className="text-xs text-[hsl(var(--muted-foreground))] flex items-center gap-1.5 mb-1">
-              <m.icon className={cn("h-3.5 w-3.5", m.color)} />
-              {m.label}
+              <m.icon className={cn("h-3.5 w-3.5 shrink-0", m.color)} />
+              <span className="truncate">{m.label}</span>
             </span>
             <span className="font-semibold text-[hsl(var(--foreground))]">{m.value}</span>
           </div>

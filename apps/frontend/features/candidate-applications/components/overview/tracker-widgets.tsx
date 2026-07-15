@@ -35,7 +35,7 @@ export function TrackerWidgets({ applications }: TrackerWidgetsProps) {
           <div className="space-y-3">
             {upcomingInterviews.map(interview => (
               <div key={interview.id} className="p-3 bg-[hsl(var(--muted)/0.5)] border border-[hsl(var(--border))] rounded-lg">
-                <Link href={`/applications/${interview.app.id}`} className="font-medium text-sm text-[hsl(var(--foreground))] hover:text-[hsl(var(--primary))] transition-colors block truncate">
+                <Link href={`/applications/${interview.app.id}`} className="font-medium text-sm text-[hsl(var(--foreground))] hover:text-[hsl(var(--primary))] transition-colors block line-clamp-2">
                   {interview.app.companyName} - {interview.app.jobTitle}
                 </Link>
                 <div className="flex justify-between items-end mt-2">
@@ -67,10 +67,10 @@ export function TrackerWidgets({ applications }: TrackerWidgetsProps) {
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-[hsl(var(--foreground))] truncate">
+                <p className="text-sm font-medium text-[hsl(var(--foreground))] line-clamp-2">
                   {activity.title}
                 </p>
-                <p className="text-xs text-[hsl(var(--muted-foreground))] truncate mt-0.5">
+                <p className="text-xs text-[hsl(var(--muted-foreground))] line-clamp-1 mt-0.5">
                   <Link href={`/applications/${activity.app.id}`} className="hover:underline">{activity.app.companyName}</Link>
                 </p>
                 <p className="text-[10px] text-[hsl(var(--muted-foreground))] mt-1">

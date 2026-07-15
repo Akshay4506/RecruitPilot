@@ -3,18 +3,23 @@
 import * as React from "react";
 import { RecruiterAnalyticsHero } from "./components/overview/recruiter-analytics-hero";
 import { AnalyticsMetrics } from "./components/overview/analytics-metrics";
-import { PipelineFunnelCard } from "./components/dashboard/pipeline-funnel-card";
-import { ApplicationsTrendCard } from "./components/dashboard/applications-trend-card";
-import { SourcePerformanceCard } from "./components/dashboard/source-performance-card";
-import { TimeToHireCard } from "./components/dashboard/time-to-hire-card";
-import { OfferRateCard } from "./components/dashboard/offer-rate-card";
-import { RecruiterPerformanceCard } from "./components/dashboard/recruiter-performance-card";
-import { DepartmentPerformanceCard } from "./components/dashboard/department-performance-card";
-import { DiversityAnalyticsCard } from "./components/dashboard/diversity-analytics-card";
-import { SLADashboardCard } from "./components/dashboard/sla-dashboard-card";
 import { AIInsights } from "./components/insights/ai-insights";
 import { BenchmarkPanel } from "./components/insights/benchmark-panel";
 import { AnalyticsSidebar } from "./components/sidebar/analytics-sidebar";
+import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/loaders/skeleton";
+
+// Lazy loaded Recharts components
+const PipelineFunnelCard = dynamic(() => import("./components/dashboard/pipeline-funnel-card").then(mod => mod.PipelineFunnelCard), { ssr: false, loading: () => <Skeleton className="w-full h-[350px] rounded-xl" /> });
+const ApplicationsTrendCard = dynamic(() => import("./components/dashboard/applications-trend-card").then(mod => mod.ApplicationsTrendCard), { ssr: false, loading: () => <Skeleton className="w-full h-[350px] rounded-xl" /> });
+const SourcePerformanceCard = dynamic(() => import("./components/dashboard/source-performance-card").then(mod => mod.SourcePerformanceCard), { ssr: false, loading: () => <Skeleton className="w-full h-[350px] rounded-xl" /> });
+const TimeToHireCard = dynamic(() => import("./components/dashboard/time-to-hire-card").then(mod => mod.TimeToHireCard), { ssr: false, loading: () => <Skeleton className="w-full h-[350px] rounded-xl" /> });
+const OfferRateCard = dynamic(() => import("./components/dashboard/offer-rate-card").then(mod => mod.OfferRateCard), { ssr: false, loading: () => <Skeleton className="w-full h-[350px] rounded-xl" /> });
+const RecruiterPerformanceCard = dynamic(() => import("./components/dashboard/recruiter-performance-card").then(mod => mod.RecruiterPerformanceCard), { ssr: false, loading: () => <Skeleton className="w-full h-[350px] rounded-xl" /> });
+const DepartmentPerformanceCard = dynamic(() => import("./components/dashboard/department-performance-card").then(mod => mod.DepartmentPerformanceCard), { ssr: false, loading: () => <Skeleton className="w-full h-[350px] rounded-xl" /> });
+const DiversityAnalyticsCard = dynamic(() => import("./components/dashboard/diversity-analytics-card").then(mod => mod.DiversityAnalyticsCard), { ssr: false, loading: () => <Skeleton className="w-full h-[350px] rounded-xl" /> });
+const SLADashboardCard = dynamic(() => import("./components/dashboard/sla-dashboard-card").then(mod => mod.SLADashboardCard), { ssr: false, loading: () => <Skeleton className="w-full h-[350px] rounded-xl" /> });
+
 import { 
   mockDashboardMetrics, 
   mockHiringFunnel, 

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Interview } from "../../types";
 import { InterviewCard } from "./interview-card";
+import { EmptyState } from "@/components/display/empty-state";
 
 interface InterviewListProps {
   interviews: Interview[];
@@ -14,9 +15,12 @@ export function InterviewList({ interviews }: InterviewListProps) {
       ))}
       
       {interviews.length === 0 && (
-        <div className="text-center py-12 border border-[hsl(var(--border))] border-dashed rounded-lg text-[hsl(var(--muted-foreground))]">
-          No interviews match your filters.
-        </div>
+        <EmptyState
+          type="interviews"
+          title="No Interviews Found"
+          description="No interviews match your current filters."
+          className="border border-[hsl(var(--border))] border-dashed bg-[hsl(var(--card))]/50"
+        />
       )}
     </div>
   );

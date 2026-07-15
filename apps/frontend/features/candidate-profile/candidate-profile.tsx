@@ -45,12 +45,12 @@ export function CandidateProfile() {
 
   const handleEdit = (section: string, id?: string) => {
     // This will open the respective dialog/drawer with the form
-    console.log(`Edit ${section}`, id);
+    void 0;
   };
 
   const handleAdd = (section: string) => {
     // This will open the respective dialog/drawer with an empty form
-    console.log(`Add ${section}`);
+    void 0;
   };
 
   if (isLoading) {

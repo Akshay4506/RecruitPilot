@@ -37,7 +37,7 @@ export function QuickActions({ job }: QuickActionsProps) {
 
   const handleConfirm = () => {
     // Mock action
-    console.log(`Action ${activeDialog} confirmed for job ${job.id}`);
+    void 0;
     closeDialog();
   };
 

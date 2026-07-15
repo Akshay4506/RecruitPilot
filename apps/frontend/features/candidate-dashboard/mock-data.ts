@@ -1,5 +1,5 @@
 import type { Candidate, Application, Interview, Job } from "@/types/domain.types";
-import type { TimelineItem } from "@/components";
+import type { TimelineItem } from "@/components/display/timeline";
 
 export const mockCandidate: Candidate = {
   id: "cand_123",

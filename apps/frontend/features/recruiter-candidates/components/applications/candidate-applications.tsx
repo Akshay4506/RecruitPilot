@@ -4,13 +4,17 @@ import { Card } from "@/components/cards/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { EmptyState } from "@/components/display/empty-state";
 
 export function CandidateApplications({ candidate }: { candidate: RecruiterCandidate }) {
   if (candidate.applications.length === 0) {
     return (
-      <Card className="p-8 text-center text-[hsl(var(--muted-foreground))]">
-        No active or past applications found.
-      </Card>
+      <EmptyState
+        type="documents"
+        title="No Applications"
+        description="No active or past applications found."
+        className="bg-[hsl(var(--card))] border border-[hsl(var(--border))]"
+      />
     );
   }
 

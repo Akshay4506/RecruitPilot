@@ -13,7 +13,7 @@ export function HiringInsights({ job }: { job: Job }) {
       </h3>
       
       <div className="space-y-3">
-        {job.health.reasons.map((reason, index) => {
+        {job.health.reasons.map((reason) => {
           const isPositive = job.health.status === "HEALTHY";
           const Icon = isPositive ? CheckCircle2 : AlertTriangle;
           const colorClass = isPositive 
@@ -21,7 +21,7 @@ export function HiringInsights({ job }: { job: Job }) {
             : "text-amber-600 bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-800";
             
           return (
-            <div key={index} className={`flex items-start gap-3 p-4 rounded-lg border ${colorClass}`}>
+            <div key={reason} className={`flex items-start gap-3 p-4 rounded-lg border ${colorClass}`}>
               <Icon className="h-5 w-5 shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm font-medium">{reason}</p>

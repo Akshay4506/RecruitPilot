@@ -33,11 +33,11 @@ export function CandidateJobs() {
   };
 
   const handleApply = (job: Job) => {
-    console.log("Applying for", job.id);
+    void 0;
   };
 
   const handleSave = (job: Job) => {
-    console.log("Saving job", job.id);
+    void 0;
   };
 
   const handleClearFilters = () => {
@@ -89,8 +89,8 @@ export function CandidateJobs() {
                 }
                 setFilters(newFilters);
               }}
-              onViewSaved={() => console.log("View Saved")}
-              onViewRecent={() => console.log("View Recent")}
+              onViewSaved={() => void 0}
+              onViewRecent={() => void 0}
             />
 
             {/* Mobile Filters Trigger could go here */}
@@ -108,7 +108,7 @@ export function CandidateJobs() {
           <div className="lg:col-span-3 space-y-6">
             <div className="sticky top-6 space-y-6">
               <RecommendedJobs jobs={mockRecommendedJobs} />
-              <SavedJobsWidget jobs={mockSavedJobs} onRemove={(id) => console.log("Remove", id)} />
+              <SavedJobsWidget jobs={mockSavedJobs} onRemove={(id) => void 0} />
               <RecentlyAppliedWidget jobs={mockAppliedJobs} />
               <RecentlyViewedWidget jobs={mockRecentlyViewed} />
             </div>

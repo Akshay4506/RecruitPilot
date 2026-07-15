@@ -114,9 +114,14 @@ export function AuditTable({ logs, onViewDetails }: AuditTableProps) {
         </div>
       </div>
 
-      <div className="border border-[hsl(var(--border))] rounded-lg overflow-hidden">
-        <DataTable data={logs} columns={columns} keyField="id" />
-      </div>
+        <div className="border border-[hsl(var(--border))] rounded-xl overflow-hidden bg-[hsl(var(--card))]">
+          <DataTable 
+            data={logs} 
+            columns={columns as any}
+            keyField="id" 
+            virtualized={true}
+          />
+        </div>
     </SettingsSection>
   );
 }

@@ -14,8 +14,8 @@ export function SkillsTechnologies({ job }: { job: Job }) {
         <div className="space-y-2">
           <p className="text-sm font-medium text-[hsl(var(--foreground))]">Mandatory Skills</p>
           <div className="flex flex-wrap gap-2">
-            {mandatorySkills.map((skill, index) => (
-              <Badge key={index} variant="default">{skill.name}</Badge>
+            {mandatorySkills.map((skill) => (
+              <Badge key={skill.name} variant="default">{skill.name}</Badge>
             ))}
           </div>
         </div>
@@ -25,8 +25,8 @@ export function SkillsTechnologies({ job }: { job: Job }) {
         <div className="space-y-2">
           <p className="text-sm font-medium text-[hsl(var(--foreground))]">Preferred Skills</p>
           <div className="flex flex-wrap gap-2">
-            {preferredSkills.map((skill, index) => (
-              <Badge key={index} variant="outline">{skill.name}</Badge>
+            {preferredSkills.map((skill) => (
+              <Badge key={skill.name} variant="outline">{skill.name}</Badge>
             ))}
           </div>
         </div>
@@ -36,8 +36,8 @@ export function SkillsTechnologies({ job }: { job: Job }) {
         <div className="space-y-2">
           <p className="text-sm font-medium text-[hsl(var(--foreground))]">Technologies</p>
           <div className="flex flex-wrap gap-2">
-            {job.technologies.map((tech, index) => (
-              <Badge key={index} variant="default" className="bg-[hsl(var(--primary)/0.1)] text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.2)] shadow-none border-none">
+            {job.technologies.map((tech) => (
+              <Badge key={tech} variant="default" className="bg-[hsl(var(--primary)/0.1)] text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary)/0.2)] shadow-none border-none">
                 {tech}
               </Badge>
             ))}

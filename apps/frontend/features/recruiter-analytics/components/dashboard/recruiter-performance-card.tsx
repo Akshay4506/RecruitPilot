@@ -53,7 +53,7 @@ export function RecruiterPerformanceCard({ performance, isLoading }: RecruiterPe
       description="Output and efficiency by team member"
       isLoading={isLoading}
       isEmpty={!isLoading && performance.length === 0}
-      className="col-span-full xl:col-span-1"
+      className="col-span-full xl:col-span-1 dark text-[hsl(var(--foreground))]"
     >
       <div className="h-full overflow-auto">
         <DataTable columns={columns} data={performance} keyField="recruiterId" />

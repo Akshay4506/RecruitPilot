@@ -231,11 +231,11 @@
   --radius: var(--default-radius);
 
   /* ── SHADOWS ───────────────────────────────────────────────────────────── */
-  --shadow-xs:       0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-sm:       0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
-  --shadow-md:       0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
-  --shadow-lg:       0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
-  --shadow-xl:       0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.04);
+  --shadow-xs:       0 2px 10px -2px rgb(0 0 0 / 0.05);
+  --shadow-sm:       0 10px 30px -10px rgb(0 0 0 / 0.08);
+  --shadow-md:       0 20px 40px -10px rgb(0 0 0 / 0.08);
+  --shadow-lg:       0 30px 60px -15px rgb(0 0 0 / 0.08);
+  --shadow-xl:       0 40px 80px -20px rgb(0 0 0 / 0.08);
   --shadow-2xl:      0 25px 50px -12px rgb(0 0 0 / 0.15);
   --shadow-inner:    inset 0 2px 4px 0 rgb(0 0 0 / 0.06);
   --shadow-none:     none;
@@ -357,10 +357,10 @@
   color-scheme: light;
 
   /* ── Component Radius (remappable) ── */
-  --default-radius: 0.5rem; /* 8px */
+  --default-radius: 1.5rem; /* 24px - Pill like geometry for Crextio aesthetic */
 
   /* ── Core Backgrounds ── */
-  --background:        0 0% 99%;         /* Near white — #fcfcfc */
+  --background:        45 100% 97%;      /* Warm peach/yellow soft tint */
   --foreground:        222 47% 9%;       /* Near black with blue tint */
 
   /* ── Surface Layers ── */
@@ -390,8 +390,8 @@
   --destructive-foreground: 0 0% 100%;
 
   /* ── Borders & Inputs ── */
-  --border:            220 13% 91%;      /* Neutral-200 */
-  --input:             220 13% 91%;
+  --border:            220 13% 95%;      /* Ultra faint neutral-100 */
+  --input:             220 13% 95%;
   --ring:              239 84% 67%;      /* Same as primary */
 
   /* ── Sidebar ── */
@@ -487,7 +487,8 @@ html {
 }
 
 body {
-  background-color: hsl(var(--background));
+  background: linear-gradient(135deg, hsl(45, 100%, 97%) 0%, hsl(0, 0%, 99%) 100%);
+  background-attachment: fixed;
   color: hsl(var(--foreground));
   font-family: var(--font-sans);
   font-size: var(--text-sm);

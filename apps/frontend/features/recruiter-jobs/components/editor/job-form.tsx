@@ -18,7 +18,7 @@ export function JobForm({ initialData, mode }: JobFormProps) {
   return (
     <form className="space-y-12 max-w-4xl pb-24" onSubmit={(e) => e.preventDefault()}>
       <section className="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-xl p-6 sm:p-8 shadow-sm">
-        <BasicInformationSection />
+        <BasicInformationSection job={initialData} />
       </section>
 
       <section className="bg-[hsl(var(--card))] border border-[hsl(var(--border))] rounded-xl p-6 sm:p-8 shadow-sm">

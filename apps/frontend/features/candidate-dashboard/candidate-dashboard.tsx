@@ -38,6 +38,9 @@ export function CandidateDashboard() {
               <CareerSnapshotSkeleton />
               <ActivityTimelineSkeleton />
             </div>
+            <div className="pt-2">
+              <RecommendedJobsSkeleton />
+            </div>
           </div>
           
           {/* Right Column (4 cols) */}
@@ -48,11 +51,6 @@ export function CandidateDashboard() {
             <ResumeCardSkeleton />
             <QuickActionsSkeleton />
           </div>
-        </div>
-
-        {/* Bottom */}
-        <div className="pt-4">
-          <RecommendedJobsSkeleton />
         </div>
       </div>
     );
@@ -82,6 +80,9 @@ export function CandidateDashboard() {
               <ActivityTimeline />
             </motion.div>
           </div>
+          <motion.div variants={fadeUp} className="pt-2">
+            <RecommendedJobs />
+          </motion.div>
         </div>
         
         {/* Right Column */}
@@ -103,11 +104,6 @@ export function CandidateDashboard() {
           </motion.div>
         </div>
       </div>
-
-      {/* Bottom Section */}
-      <motion.div variants={fadeUp} className="pt-4">
-        <RecommendedJobs />
-      </motion.div>
     </motion.div>
   );
 }

@@ -1,11 +1,13 @@
 "use client";
 
 import * as React from "react";
+import { MotionConfig } from "framer-motion";
 import { ThemeProvider } from "./theme-provider";
 import { QueryProvider } from "./query-provider";
 import { ToastProvider } from "./toast-provider";
 import { CommandPaletteProvider } from "./command-palette-provider";
 import { AuthInitializer } from "./auth-initializer";
+import { GlobalLoading } from "@/components/ui/global-loading";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AppProviders — single root provider that composes all providers
@@ -24,14 +26,17 @@ interface AppProvidersProps {
 function AppProviders({ children }: AppProvidersProps) {
   return (
     <ThemeProvider>
-      <QueryProvider>
-        <ToastProvider />
-        <AuthInitializer>
-          <CommandPaletteProvider>
-            {children}
-          </CommandPaletteProvider>
-        </AuthInitializer>
-      </QueryProvider>
+      <MotionConfig reducedMotion="user">
+        <QueryProvider>
+          <ToastProvider />
+          <GlobalLoading />
+          <AuthInitializer>
+            <CommandPaletteProvider>
+              {children}
+            </CommandPaletteProvider>
+          </AuthInitializer>
+        </QueryProvider>
+      </MotionConfig>
     </ThemeProvider>
   );
 }

@@ -16,17 +16,17 @@ export function CandidateSnapshot({ application }: { application: Application })
             Experience & Education
           </h3>
           <div className="space-y-3 text-sm">
-            <div className="flex justify-between items-center pb-2 border-b border-[hsl(var(--border))]">
-              <span className="text-[hsl(var(--muted-foreground))]">Total Experience</span>
-              <span className="font-medium text-[hsl(var(--foreground))]">{candidate.experienceYears} Years</span>
+            <div className="flex flex-col gap-1 pb-3 border-b border-[hsl(var(--border))] last:border-0 last:pb-0">
+              <span className="text-[hsl(var(--muted-foreground))] flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider">Total Experience</span>
+              <span className="font-medium text-[hsl(var(--foreground))] text-sm">{candidate.experienceYears} Years</span>
             </div>
-            <div className="flex justify-between items-center pb-2 border-b border-[hsl(var(--border))]">
-              <span className="text-[hsl(var(--muted-foreground))] flex items-center gap-2"><GraduationCap className="h-4 w-4" /> Education</span>
-              <span className="font-medium text-[hsl(var(--foreground))] text-right max-w-[200px] truncate" title={candidate.education}>{candidate.education || "Not specified"}</span>
+            <div className="flex flex-col gap-1 pb-3 border-b border-[hsl(var(--border))] last:border-0 last:pb-0">
+              <span className="text-[hsl(var(--muted-foreground))] flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider"><GraduationCap className="h-3.5 w-3.5" /> Education</span>
+              <span className="font-medium text-[hsl(var(--foreground))] text-sm line-clamp-2" title={candidate.education}>{candidate.education || "Not specified"}</span>
             </div>
-            <div className="flex justify-between items-center pb-2 border-b border-[hsl(var(--border))]">
-              <span className="text-[hsl(var(--muted-foreground))] flex items-center gap-2"><MapPin className="h-4 w-4" /> Location</span>
-              <span className="font-medium text-[hsl(var(--foreground))]">{candidate.location || "Not specified"}</span>
+            <div className="flex flex-col gap-1 pb-3 border-b border-[hsl(var(--border))] last:border-0 last:pb-0">
+              <span className="text-[hsl(var(--muted-foreground))] flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider"><MapPin className="h-3.5 w-3.5" /> Location</span>
+              <span className="font-medium text-[hsl(var(--foreground))] text-sm">{candidate.location || "Not specified"}</span>
             </div>
           </div>
         </Card>
@@ -37,17 +37,17 @@ export function CandidateSnapshot({ application }: { application: Application })
             Logistics & Requirements
           </h3>
           <div className="space-y-3 text-sm">
-            <div className="flex justify-between items-center pb-2 border-b border-[hsl(var(--border))]">
-              <span className="text-[hsl(var(--muted-foreground))] flex items-center gap-2"><Clock className="h-4 w-4" /> Availability</span>
-              <span className="font-medium text-[hsl(var(--foreground))]">{candidate.availability || "Not specified"}</span>
+            <div className="flex flex-col gap-1 pb-3 border-b border-[hsl(var(--border))] last:border-0 last:pb-0">
+              <span className="text-[hsl(var(--muted-foreground))] flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider"><Clock className="h-3.5 w-3.5" /> Availability</span>
+              <span className="font-medium text-[hsl(var(--foreground))] text-sm">{candidate.availability || "Not specified"}</span>
             </div>
-            <div className="flex justify-between items-center pb-2 border-b border-[hsl(var(--border))]">
-              <span className="text-[hsl(var(--muted-foreground))] flex items-center gap-2"><Clock className="h-4 w-4" /> Notice Period</span>
-              <span className="font-medium text-[hsl(var(--foreground))]">{candidate.noticePeriod || "Not specified"}</span>
+            <div className="flex flex-col gap-1 pb-3 border-b border-[hsl(var(--border))] last:border-0 last:pb-0">
+              <span className="text-[hsl(var(--muted-foreground))] flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider"><Clock className="h-3.5 w-3.5" /> Notice Period</span>
+              <span className="font-medium text-[hsl(var(--foreground))] text-sm">{candidate.noticePeriod || "Not specified"}</span>
             </div>
-            <div className="flex justify-between items-center pb-2 border-b border-[hsl(var(--border))]">
-              <span className="text-[hsl(var(--muted-foreground))] flex items-center gap-2"><DollarSign className="h-4 w-4" /> Current / Expected Salary</span>
-              <span className="font-medium text-[hsl(var(--foreground))]">{candidate.currentSalary || "?"} / {candidate.expectedSalary || "?"}</span>
+            <div className="flex flex-col gap-1 pb-3 border-b border-[hsl(var(--border))] last:border-0 last:pb-0">
+              <span className="text-[hsl(var(--muted-foreground))] flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider"><DollarSign className="h-3.5 w-3.5" /> Current / Expected Salary</span>
+              <span className="font-medium text-[hsl(var(--foreground))] text-sm">{candidate.currentSalary || "?"} / {candidate.expectedSalary || "?"}</span>
             </div>
           </div>
         </Card>

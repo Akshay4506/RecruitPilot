@@ -3,7 +3,8 @@ import { Job } from "../../types";
 import { JobStatusChip } from "../display/job-status-chip";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
-import { MoreHorizontal, ArrowUpDown, Circle } from "lucide-react";
+import { MoreHorizontal, ArrowUpDown, Circle, Users, Edit } from "lucide-react";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { ROUTES } from "@/constants/routes";
 import { formatDistanceToNow } from "date-fns";
@@ -70,15 +71,31 @@ export function RecruiterJobTable({ jobs, onPreview }: RecruiterJobTableProps) {
                   {job.publishedAt ? formatDistanceToNow(new Date(job.publishedAt), { addSuffix: true }) : "-"}
                 </td>
                 <td className="px-6 py-4 text-right">
-                  <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="flex items-center justify-end gap-2">
                     <Button variant="ghost" size="sm" onClick={() => onPreview(job)}>
                       Preview
                     </Button>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0" asChild>
-                      <Link href={ROUTES.recruiter.jobEdit(job.id)}>
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Link>
-                    </Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem asChild>
+                          <Link href={ROUTES.recruiter.applications + "?job=" + job.id} className="cursor-pointer">
+                            <Users className="h-4 w-4 mr-2" />
+                            View Candidates
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href={ROUTES.recruiter.jobEdit(job.id)} className="cursor-pointer">
+                            <Edit className="h-4 w-4 mr-2" />
+                            Edit Job
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 </td>
               </tr>

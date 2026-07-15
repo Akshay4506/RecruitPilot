@@ -2,8 +2,9 @@ import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/primitives";
 import { Textarea } from "@/components/ui/input";
+import { Job } from "../../types";
 
-export function BasicInformationSection() {
+export function BasicInformationSection({ job }: { job?: Job }) {
   return (
     <div className="space-y-6">
       <div>
@@ -14,19 +15,19 @@ export function BasicInformationSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label>Job Title *</Label>
-          <Input placeholder="e.g. Senior Frontend Engineer" />
+          <Input defaultValue={job?.title} placeholder="e.g. Senior Frontend Engineer" />
         </div>
         <div className="space-y-2">
           <Label>Department *</Label>
-          <Input placeholder="e.g. Engineering" />
+          <Input defaultValue={job?.department} placeholder="e.g. Engineering" />
         </div>
         <div className="space-y-2">
           <Label>Location</Label>
-          <Input placeholder="e.g. San Francisco, CA" />
+          <Input defaultValue={job?.location ? `${job.location.city}, ${job.location.country}` : ""} placeholder="e.g. San Francisco, CA" />
         </div>
         <div className="space-y-2">
           <Label>Work Mode</Label>
-          <select className="flex h-10 w-full rounded-md border border-[hsl(var(--input))] bg-transparent px-3 py-2 text-sm ring-offset-[hsl(var(--background))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] disabled:cursor-not-allowed disabled:opacity-50">
+          <select defaultValue={job?.workMode || "Remote"} className="flex h-10 w-full rounded-md border border-[hsl(var(--input))] bg-transparent px-3 py-2 text-sm ring-offset-[hsl(var(--background))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] disabled:cursor-not-allowed disabled:opacity-50">
             <option>Remote</option>
             <option>Hybrid</option>
             <option>On-site</option>
@@ -35,6 +36,7 @@ export function BasicInformationSection() {
         <div className="md:col-span-2 space-y-2">
           <Label>Job Summary *</Label>
           <Textarea 
+            defaultValue={job?.summary}
             placeholder="A short, compelling summary of the role..." 
             className="min-h-[100px]"
           />

@@ -45,24 +45,24 @@ export function StorageOverview({ overview }: StorageOverviewProps) {
       </Card>
 
       {/* Breakdown Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-3">
         <MetricCard
           title="Resumes"
           value={overview.resumesCount.toString()}
           icon={FileText}
-          className="border-[hsl(var(--border))] shadow-sm text-[hsl(var(--primary))]"
+          className="p-4 border-[hsl(var(--border))] shadow-sm text-[hsl(var(--primary))]"
         />
         <MetricCard
           title="Certificates"
           value={overview.certificatesCount.toString()}
           icon={Award}
-          className="border-[hsl(var(--border))] shadow-sm text-[hsl(var(--warning))]"
+          className="p-4 border-[hsl(var(--border))] shadow-sm text-[hsl(var(--warning))]"
         />
         <MetricCard
           title="Portfolios"
           value={overview.portfolioFilesCount.toString()}
           icon={Briefcase}
-          className="border-[hsl(var(--border))] shadow-sm text-[hsl(var(--info))]"
+          className="p-4 border-[hsl(var(--border))] shadow-sm text-[hsl(var(--info))]"
         />
       </div>
     </div>

@@ -3,13 +3,17 @@ import { RecruiterCandidate } from "../../types";
 import { Card } from "@/components/cards/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Video, User, CheckCircle2 } from "lucide-react";
+import { EmptyState } from "@/components/display/empty-state";
 
 export function CandidateInterviews({ candidate }: { candidate: RecruiterCandidate }) {
   if (candidate.interviews.length === 0) {
     return (
-      <Card className="p-8 text-center text-[hsl(var(--muted-foreground))]">
-        No interviews scheduled or completed yet.
-      </Card>
+      <EmptyState
+        type="interviews"
+        title="No Interviews"
+        description="No interviews scheduled or completed yet."
+        className="bg-[hsl(var(--card))] border border-[hsl(var(--border))]"
+      />
     );
   }
 

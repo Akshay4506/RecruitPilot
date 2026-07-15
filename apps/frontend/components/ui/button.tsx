@@ -10,7 +10,7 @@ const buttonVariants = cva(
   // Base styles shared across all variants
   [
     "inline-flex items-center justify-center gap-2 whitespace-nowrap",
-    "font-medium text-sm rounded-md",
+    "font-medium text-sm rounded-full",
     "transition-all duration-200 ease-out",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
     "disabled:pointer-events-none disabled:opacity-50",

@@ -45,7 +45,7 @@ export function DocumentCard({ document, onPreview, onDownload, onRename, onDele
         </div>
         
         <div className="space-y-1 mb-4">
-          <h4 className="font-semibold text-sm text-[hsl(var(--foreground))] line-clamp-2" title={document.name}>
+          <h4 className="font-semibold text-sm text-[hsl(var(--foreground))] line-clamp-2 break-all" title={document.name}>
             {document.name}
           </h4>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[hsl(var(--muted-foreground))]">
@@ -58,30 +58,30 @@ export function DocumentCard({ document, onPreview, onDownload, onRename, onDele
         </div>
 
         <div className="space-y-2 text-xs">
-          <div className="flex items-center justify-between text-[hsl(var(--muted-foreground))]">
-            <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-between gap-2 text-[hsl(var(--muted-foreground))]">
+            <div className="flex items-center gap-1.5 shrink-0">
               <Clock className="h-3.5 w-3.5" /> Uploaded
             </div>
-            <span className="font-medium text-[hsl(var(--foreground))]">
+            <span className="font-medium text-[hsl(var(--foreground))] whitespace-nowrap truncate">
               {formatDate(document.createdAt || "", { month: "short", day: "numeric", year: "numeric" })}
             </span>
           </div>
           
-          <div className="flex items-center justify-between text-[hsl(var(--muted-foreground))]">
-            <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-between gap-2 text-[hsl(var(--muted-foreground))]">
+            <div className="flex items-center gap-1.5 shrink-0">
               <Shield className="h-3.5 w-3.5" /> Visibility
             </div>
-            <div className="flex items-center gap-1 font-medium text-[hsl(var(--foreground))]">
+            <div className="flex items-center gap-1 font-medium text-[hsl(var(--foreground))] whitespace-nowrap truncate">
               <VisibilityIcon visibility={document.visibility} />
               {getVisibilityLabel(document.visibility)}
             </div>
           </div>
           
-          <div className="flex items-center justify-between text-[hsl(var(--muted-foreground))]">
-            <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-between gap-2 text-[hsl(var(--muted-foreground))]">
+            <div className="flex items-center gap-1.5 shrink-0">
               <DownloadCloud className="h-3.5 w-3.5" /> Downloads
             </div>
-            <span className="font-medium text-[hsl(var(--foreground))]">{document.downloadCount}</span>
+            <span className="font-medium text-[hsl(var(--foreground))] whitespace-nowrap">{document.downloadCount}</span>
           </div>
         </div>
       </CardContent>

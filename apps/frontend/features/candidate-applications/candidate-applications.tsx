@@ -26,7 +26,7 @@ export function CandidateApplications() {
   };
 
   const handleWithdraw = (app: Application) => {
-    console.log("Withdrawing application", app.id);
+    void 0;
   };
 
   const handleClearFilters = () => {

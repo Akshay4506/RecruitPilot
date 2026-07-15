@@ -40,15 +40,13 @@ export function ApplicationCard({ application, onQuickView, onWithdraw }: Applic
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-[10px] font-mono text-[hsl(var(--muted-foreground))] mb-0.5">{application.applicationNumber}</p>
-                <h3 className="text-lg font-semibold text-[hsl(var(--foreground))] group-hover:text-[hsl(var(--primary))] transition-colors truncate">
-                  <Link href={`/applications/${application.id}`}>{application.jobTitle}</Link>
-                </h3>
-              </div>
-              <StatusChip variant={getStatusType(application.status) as any} label={application.status} className="shrink-0 ml-2" />
+            <div className="flex justify-between items-center mb-1">
+              <p className="text-[10px] font-mono text-[hsl(var(--muted-foreground))] truncate mr-2">{application.applicationNumber}</p>
+              <StatusChip variant={getStatusType(application.status) as any} label={application.status} className="shrink-0" />
             </div>
+            <h3 className="text-lg font-semibold text-[hsl(var(--foreground))] group-hover:text-[hsl(var(--primary))] transition-colors line-clamp-2" title={application.jobTitle}>
+              <Link href={`/applications/${application.id}`}>{application.jobTitle}</Link>
+            </h3>
             
             <div className="text-sm text-[hsl(var(--muted-foreground))] flex items-center flex-wrap gap-x-3 gap-y-1 mt-1">
               <span className="font-medium">{application.companyName}</span>
@@ -103,7 +101,7 @@ export function ApplicationCard({ application, onQuickView, onWithdraw }: Applic
 
       </div>
 
-      <div className="pt-4 border-t border-[hsl(var(--border))] flex items-center justify-between mt-auto">
+      <div className="pt-4 border-t border-[hsl(var(--border))] flex flex-wrap items-center justify-between gap-2 mt-auto">
         <Button variant="ghost" size="sm" className="h-8 text-xs text-[hsl(var(--muted-foreground))]" onClick={() => onWithdraw?.(application)}>
           Withdraw
         </Button>

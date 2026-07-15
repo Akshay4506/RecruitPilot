@@ -10,6 +10,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { SidebarGroup } from "./sidebar-group";
 import { SidebarItem } from "./sidebar-item";
 import { useSidebarStore } from "@/store/sidebar.store";
+import { useShallow } from "zustand/react/shallow";
 import type { NavConfig } from "@/types/navigation";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -98,7 +99,7 @@ function SidebarContent({
           variant="ghost"
           size="icon-sm"
           onClick={toggle}
-          className={cn("shrink-0 hidden md:flex", isCollapsed && "hidden")}
+          className={cn("shrink-0 hidden", !isCollapsed && "md:flex")}
           aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           <PanelLeftClose className="h-4 w-4" />
@@ -192,7 +193,13 @@ function SidebarContent({
 // ─────────────────────────────────────────────────────────────────────────────
 
 function Sidebar(props: SidebarProps) {
-  const { isCollapsed, isMobileOpen, closeMobile } = useSidebarStore();
+  const { isCollapsed, isMobileOpen, closeMobile } = useSidebarStore(
+    useShallow((state) => ({
+      isCollapsed: state.isCollapsed,
+      isMobileOpen: state.isMobileOpen,
+      closeMobile: state.closeMobile,
+    }))
+  );
 
   return (
     <>

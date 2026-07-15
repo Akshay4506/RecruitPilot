@@ -20,6 +20,10 @@ interface UIStore {
   // Global loading overlay (for full-page transitions)
   isPageLoading: boolean;
   setPageLoading: (loading: boolean) => void;
+
+  globalLoading: boolean;
+  globalLoadingMessage?: string;
+  setGlobalLoading: (loading: boolean, message?: string) => void;
 }
 
 export const useUIStore = create<UIStore>()((set) => ({
@@ -37,4 +41,8 @@ export const useUIStore = create<UIStore>()((set) => ({
   // Page loading
   isPageLoading: false,
   setPageLoading: (isPageLoading) => set({ isPageLoading }),
+
+  globalLoading: false,
+  globalLoadingMessage: undefined,
+  setGlobalLoading: (loading, message) => set({ globalLoading: loading, globalLoadingMessage: message }),
 }));

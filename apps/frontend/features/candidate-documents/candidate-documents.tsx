@@ -58,17 +58,17 @@ export function CandidateDocuments() {
 
   const handleDownload = (doc: CandidateDocument) => {
     // Implement download logic
-    console.log("Downloading", doc.name);
+    void 0;
   };
 
   const handleDelete = (doc: CandidateDocument) => {
     // Implement delete logic
-    console.log("Deleting", doc.id);
+    void 0;
   };
 
   const handleRename = (doc: CandidateDocument) => {
     // Implement rename logic
-    console.log("Renaming", doc.id);
+    void 0;
   };
 
   if (isLoading) {
@@ -101,10 +101,10 @@ export function CandidateDocuments() {
         
         <HeroHeader 
           overview={storageOverview} 
-          onUploadResume={() => console.log("Upload Resume")}
-          onUploadCertificate={() => console.log("Upload Certificate")}
-          onUploadPortfolio={() => console.log("Upload Portfolio")}
-          onBrowseJobs={() => console.log("Browse Jobs")}
+          onUploadResume={() => void 0}
+          onUploadCertificate={() => void 0}
+          onUploadPortfolio={() => void 0}
+          onBrowseJobs={() => void 0}
         />
 
         {!hasAnyDocuments ? (
@@ -112,8 +112,8 @@ export function CandidateDocuments() {
             title="No Documents Found"
             description="Upload your resume, portfolio, or certificates to get started."
             icon={UploadCloud}
-            action={{ label: "Upload Resume", onClick: () => console.log("Upload") }}
-            secondaryAction={{ label: "Complete Profile", onClick: () => console.log("Profile") }}
+            action={{ label: "Upload Resume", onClick: () => void 0 }}
+            secondaryAction={{ label: "Complete Profile", onClick: () => void 0 }}
           />
         ) : (
           <motion.div
@@ -125,22 +125,22 @@ export function CandidateDocuments() {
             {/* Left Column (8 cols on desktop) */}
             <div className="lg:col-span-8 space-y-6">
               
-              <motion.div variants={fadeUpItem} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="h-full">
+              <motion.div variants={fadeUpItem} className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <div>
                   <DefaultResume 
                     resume={defaultResume}
                     onPreview={handlePreview}
                     onDownload={handleDownload}
                     onDelete={handleDelete}
-                    onReplace={() => console.log("Replace")}
+                    onReplace={() => void 0}
                   />
                 </div>
-                <div className="h-full">
+                <div>
                   <VersionHistory 
                     history={resumeHistory}
                     onPreview={handlePreview}
                     onDownload={handleDownload}
-                    onRestore={(doc) => console.log("Restore", doc.id)}
+                    onRestore={(doc) => void 0}
                     onDelete={handleDelete}
                   />
                 </div>

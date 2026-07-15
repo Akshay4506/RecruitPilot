@@ -13,7 +13,7 @@ interface InterviewCardProps {
   onConfirm?: (interview: Interview) => void;
 }
 
-export function InterviewCard({ interview, onConfirm }: InterviewCardProps) {
+const InterviewCardBase = ({ interview, onConfirm }: InterviewCardProps) => {
   
   const getStatusVariant = (status: InterviewStatus) => {
     switch(status) {
@@ -113,3 +113,5 @@ export function InterviewCard({ interview, onConfirm }: InterviewCardProps) {
     </Card>
   );
 }
+
+export const InterviewCard = React.memo(InterviewCardBase);

@@ -10,8 +10,11 @@ import { PipelineSearch } from "./components/search/pipeline-search";
 import { PipelineFilters } from "./components/search/pipeline-filters";
 import { PipelineBoard } from "./components/board/pipeline-board";
 import { PipelineSidebar } from "./components/rail/pipeline-sidebar";
-import { PipelineFunnel } from "./components/analytics/pipeline-funnel";
-import { StagePerformance } from "./components/analytics/stage-performance";
+import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/loaders/skeleton";
+
+const PipelineFunnel = dynamic(() => import("./components/analytics/pipeline-funnel").then(mod => mod.PipelineFunnel), { ssr: false, loading: () => <Skeleton className="w-full h-[300px] rounded-xl" /> });
+const StagePerformance = dynamic(() => import("./components/analytics/stage-performance").then(mod => mod.StagePerformance), { ssr: false, loading: () => <Skeleton className="w-full h-[300px] rounded-xl" /> });
 import { PipelineInsights } from "./components/analytics/pipeline-insights";
 import { BulkToolbar } from "./components/bulk/bulk-toolbar";
 import { CandidatePreviewDrawer } from "./components/drawer/candidate-preview-drawer";

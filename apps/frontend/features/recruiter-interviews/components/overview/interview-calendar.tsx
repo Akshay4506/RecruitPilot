@@ -23,8 +23,8 @@ export function InterviewCalendar({ interviews }: InterviewCalendarProps) {
   };
 
   return (
-    <Card className="border-[hsl(var(--border))] shadow-sm bg-[hsl(var(--card))]">
-      <CardHeader className="pb-4 flex flex-row items-center justify-between">
+    <Card className="border-[hsl(var(--border))] shadow-sm bg-[hsl(var(--card))] overflow-hidden">
+      <CardHeader className="pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <CardTitle className="text-sm font-semibold text-[hsl(var(--foreground))] flex items-center gap-2">
           <CalendarIcon className="h-4 w-4" /> Weekly Schedule
         </CardTitle>
@@ -34,7 +34,7 @@ export function InterviewCalendar({ interviews }: InterviewCalendarProps) {
             <Button variant="ghost" size="icon-xs" onClick={() => setCurrentDate(addDays(currentDate, -7))}>
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <span className="text-sm font-medium w-32 text-center">
+            <span className="text-sm font-medium">
               {format(startDate, "MMM d")} - {format(addDays(startDate, 6), "MMM d")}
             </span>
             <Button variant="ghost" size="icon-xs" onClick={() => setCurrentDate(addDays(currentDate, 7))}>
@@ -44,8 +44,9 @@ export function InterviewCalendar({ interviews }: InterviewCalendarProps) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-7 gap-px bg-[hsl(var(--border))] rounded-lg overflow-hidden border border-[hsl(var(--border))]">
-          {/* Header Row */}
+        <div className="overflow-x-auto pb-2 -mx-2 px-2 sm:mx-0 sm:px-0">
+          <div className="min-w-[450px] grid grid-cols-7 gap-px bg-[hsl(var(--border))] rounded-lg overflow-hidden border border-[hsl(var(--border))]">
+            {/* Header Row */}
           {weekDays.map(day => (
             <div key={day.toISOString()} className="bg-[hsl(var(--muted)/0.3)] p-2 text-center border-b border-[hsl(var(--border))]">
               <div className="text-xs text-[hsl(var(--muted-foreground))] uppercase font-semibold">{format(day, "EEE")}</div>
@@ -68,6 +69,7 @@ export function InterviewCalendar({ interviews }: InterviewCalendarProps) {
                       inv.status === 'COMPLETED' ? 'bg-[hsl(var(--success)/0.1)] border-[hsl(var(--success)/0.2)] text-[hsl(var(--success))]' :
                       'bg-[hsl(var(--muted))] border-[hsl(var(--border))] text-[hsl(var(--muted-foreground))]'
                     }`}
+                    title={`${format(new Date(inv.scheduledAt), "h:mm a")} - ${inv.candidate.name}\n${inv.type} Round`}
                   >
                     <div className="font-semibold truncate">{format(new Date(inv.scheduledAt), "h:mm a")}</div>
                     <div className="truncate opacity-90">{inv.candidate.name}</div>
@@ -76,6 +78,7 @@ export function InterviewCalendar({ interviews }: InterviewCalendarProps) {
               </div>
             );
           })}
+          </div>
         </div>
       </CardContent>
     </Card>

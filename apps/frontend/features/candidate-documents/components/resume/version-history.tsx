@@ -30,31 +30,29 @@ export function VersionHistory({ history, onPreview, onDownload, onRestore, onDe
             const sizeMB = (doc.sizeBytes / (1024 * 1024)).toFixed(2);
             
             return (
-              <div key={doc.id} className="p-4 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-[hsl(var(--muted)/0.3)] transition-colors">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-[hsl(var(--muted))] text-[hsl(var(--muted-foreground))]">
-                  <FileText className="h-5 w-5" />
-                </div>
-                
-                <div className="flex-1 min-w-0 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-sm text-[hsl(var(--foreground))]">Version {doc.version}</span>
-                    {isLatest && <Badge variant="default" size="sm">Latest</Badge>}
-                    {doc.isDefault && <Badge variant="success" size="sm">Current</Badge>}
+              <div key={doc.id} className="p-4 flex flex-wrap items-start sm:items-center justify-between gap-4 hover:bg-[hsl(var(--muted)/0.3)] transition-colors">
+                <div className="flex items-center gap-4 flex-1 min-w-[200px]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-[hsl(var(--muted))] text-[hsl(var(--muted-foreground))]">
+                    <FileText className="h-5 w-5" />
                   </div>
-                  <div className="text-xs text-[hsl(var(--muted-foreground))] flex items-center gap-2">
-                    <span>{formatDate(doc.createdAt || "", { month: "short", day: "numeric", year: "numeric" })}</span>
-                    <span>&bull;</span>
-                    <span>{sizeMB} MB</span>
-                    {doc.uploadedBy && (
-                      <>
-                        <span>&bull;</span>
-                        <span>By {doc.uploadedBy === "usr-999" ? "You" : "System"}</span>
-                      </>
-                    )}
+                  
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-semibold text-sm text-[hsl(var(--foreground))] whitespace-nowrap">Version {doc.version}</span>
+                      {isLatest && <Badge variant="default" size="sm">Latest</Badge>}
+                      {doc.isDefault && <Badge variant="success" size="sm">Current</Badge>}
+                    </div>
+                    <div className="text-xs text-[hsl(var(--muted-foreground))] flex flex-wrap items-center gap-1">
+                      <span className="whitespace-nowrap">{formatDate(doc.createdAt || "", { month: "short", day: "numeric", year: "numeric" })}</span>
+                      <span className="whitespace-nowrap">&bull; {sizeMB} MB</span>
+                      {doc.uploadedBy && (
+                        <span className="whitespace-nowrap">&bull; By {doc.uploadedBy === "usr-999" ? "You" : "System"}</span>
+                      )}
+                    </div>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-1 sm:ml-auto">
+                <div className="flex items-center gap-1 shrink-0 ml-auto">
                   <Button variant="ghost" size="icon-sm" onClick={() => onPreview?.(doc)} aria-label={`Preview v${doc.version}`}>
                     <Eye className="h-4 w-4 text-[hsl(var(--muted-foreground))]" />
                   </Button>

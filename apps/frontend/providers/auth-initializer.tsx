@@ -1,8 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { authService } from "@/services/auth/auth.service";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth.store";
+import { useShallow } from "zustand/react/shallow";
+import { authService } from "@/services/auth/auth.service";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // AuthInitializer — runs once on app mount to restore session
@@ -12,7 +14,13 @@ import { useAuthStore } from "@/store/auth.store";
 // ─────────────────────────────────────────────────────────────────────────────
 
 function AuthInitializer({ children }: { children: React.ReactNode }) {
-  const { login, setLoading, setInitialized } = useAuthStore();
+  const { login, setLoading, setInitialized } = useAuthStore(
+    useShallow((state) => ({
+      login: state.login,
+      setLoading: state.setLoading,
+      setInitialized: state.setInitialized,
+    }))
+  );
 
   React.useEffect(() => {
     let cancelled = false;

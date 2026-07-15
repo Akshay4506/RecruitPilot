@@ -16,7 +16,7 @@ export function SkillsTechnologiesSection() {
         <div className="space-y-2">
           <Label>Required Skills</Label>
           <div className="flex gap-2">
-            <Input placeholder="Add a required skill (e.g. React)..." className="max-w-xs" />
+            <Input placeholder="Add a required skill (e.g. React)..." containerClassName="flex-1" />
             <Button variant="secondary"><Plus className="h-4 w-4 mr-2" /> Add</Button>
           </div>
           <div className="flex flex-wrap gap-2 mt-3">
@@ -32,7 +32,7 @@ export function SkillsTechnologiesSection() {
         <div className="space-y-2 pt-4 border-t border-[hsl(var(--border))]">
           <Label>Preferred Skills (Nice to have)</Label>
           <div className="flex gap-2">
-            <Input placeholder="Add a preferred skill..." className="max-w-xs" />
+            <Input placeholder="Add a preferred skill..." containerClassName="flex-1" />
             <Button variant="secondary"><Plus className="h-4 w-4 mr-2" /> Add</Button>
           </div>
         </div>

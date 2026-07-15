@@ -25,7 +25,7 @@ export function InterviewList({ interviews, onConfirm, onClearFilters }: Intervi
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6">
       <AnimatePresence mode="popLayout">
         {interviews.map((interview, index) => (
           <motion.div

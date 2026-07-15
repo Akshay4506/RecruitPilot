@@ -22,7 +22,7 @@ export function RecruiterJobPreviewDrawer({ job, isOpen, onClose }: RecruiterJob
     <Drawer open={isOpen} onOpenChange={onClose}>
       <DrawerContent className="h-full w-[400px] sm:w-[500px] mt-0 rounded-none overflow-y-auto">
         <DrawerHeader className="text-left border-b border-[hsl(var(--border))] pb-6">
-          <div className="flex items-start justify-between">
+          <div className="flex items-start justify-between pr-10">
             <div>
               <DrawerTitle className="text-xl font-bold">{job.title}</DrawerTitle>
               <DrawerDescription className="mt-2 flex items-center gap-3 text-sm">

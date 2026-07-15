@@ -31,8 +31,10 @@ function SidebarItem({ item, isCollapsed, depth = 0 }: SidebarItemProps) {
     return item.children?.some((c) => pathname.startsWith(c.href)) ?? false;
   });
 
-  // Active if exact match or prefix match (for sections)
-  const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+  // Active if exact match or prefix match (for parent sections only)
+  const isActive = hasChildren 
+    ? pathname === item.href || pathname.startsWith(item.href + "/")
+    : pathname === item.href;
   const Icon = item.icon;
 
   const itemClasses = cn(

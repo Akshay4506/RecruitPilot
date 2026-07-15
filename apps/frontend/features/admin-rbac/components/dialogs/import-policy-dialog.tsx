@@ -23,7 +23,7 @@ export function ImportPolicyDialog({ isOpen, onClose }: ImportPolicyDialogProps)
           <FileUpload 
             accept=".json,application/json" 
             maxSize={2 * 1024 * 1024} 
-            onFilesSelected={(files: File[]) => console.log(files)}
+            onFilesSelected={(files: File[]) => void 0}
             description="Upload JSON definition (max 2MB)"
           />
         </div>

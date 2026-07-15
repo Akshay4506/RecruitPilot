@@ -1,11 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { ChevronUp, ChevronDown, ChevronsUpDown, MoreHorizontal } from "lucide-react";
+import { ChevronUp, ChevronDown, ChevronsUpDown, MoreHorizontal, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { Skeleton } from "@/components/loaders/skeleton";
 import { EmptyState } from "@/components/display/empty-state";
+import { Input } from "./input";
+import { useVirtualizer } from "@tanstack/react-virtual";
+import { useDebounce } from "@/hooks/use-debounce";
 
 
 
@@ -81,8 +84,18 @@ export interface DataTableProps<T extends object> {
   onSort?: (columnId: string, direction: SortDirection) => void;
   /** Additional table className */
   className?: string;
+  /** Additional container className */
+  containerClassName?: string;
   /** Caption for accessibility */
   caption?: string;
+  /** Enable virtualization */
+  virtualized?: boolean;
+  /** Global search filter */
+  globalFilter?: string;
+  /** Callback for global search filter */
+  onGlobalFilterChange?: (value: string) => void;
+  /** Placeholder for global search input */
+  searchPlaceholder?: string;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -189,7 +202,12 @@ function DataTable<T extends object>({
   defaultPageSize = 10,
   onSort,
   className,
+  containerClassName,
   caption,
+  virtualized = false,
+  globalFilter,
+  onGlobalFilterChange,
+  searchPlaceholder = "Search...",
 }: DataTableProps<T>) {
   // ── Sort state ──────────────────────────────────────────────────────────
   const [sortColumn, setSortColumn] = React.useState<string | null>(null);
@@ -202,8 +220,33 @@ function DataTable<T extends object>({
   const [clientPage, setClientPage] = React.useState(1);
   const [clientPageSize] = React.useState(defaultPageSize);
 
+  // ── Client-side filtering state (internal if not controlled) ───────────
+  const [internalGlobalFilter, setInternalGlobalFilter] = React.useState("");
+  const activeGlobalFilter = globalFilter !== undefined ? globalFilter : internalGlobalFilter;
+  
+  const debouncedGlobalFilter = useDebounce(activeGlobalFilter, 300);
+
+  const handleGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setInternalGlobalFilter(val);
+    onGlobalFilterChange?.(val);
+    if (!isControlled) setClientPage(1);
+  };
+
   // ── Controlled vs client pagination ────────────────────────────────────
   const isControlled = !!pagination;
+
+  // ── Filter logic (client-side only) ────────────────────────────────────
+  const filteredData = React.useMemo(() => {
+    if (isControlled || !debouncedGlobalFilter) return data;
+    const lowerFilter = debouncedGlobalFilter.toLowerCase();
+    return data.filter((row) => {
+      // Basic implementation: stringify all values and check if any includes filter
+      return Object.values(row).some((val) => 
+        String(val).toLowerCase().includes(lowerFilter)
+      );
+    });
+  }, [data, debouncedGlobalFilter, isControlled]);
 
   // ── Sort logic (client-side only) ──────────────────────────────────────
   const handleSort = (colId: string, sortable?: boolean) => {
@@ -218,17 +261,17 @@ function DataTable<T extends object>({
   };
 
   const sortedData = React.useMemo(() => {
-    if (!sortColumn || sortDir === null || isControlled) return data;
+    if (!sortColumn || sortDir === null || isControlled) return filteredData;
     const col = columns.find((c) => c.id === sortColumn);
-    if (!col?.accessor) return data;
-    return [...data].sort((a, b) => {
+    if (!col?.accessor) return filteredData;
+    return [...filteredData].sort((a, b) => {
       const aVal = a[col.accessor as keyof T];
       const bVal = b[col.accessor as keyof T];
       const aStr = String(aVal ?? "");
       const bStr = String(bVal ?? "");
       return sortDir === "asc" ? aStr.localeCompare(bStr) : bStr.localeCompare(aStr);
     });
-  }, [data, sortColumn, sortDir, columns, isControlled]);
+  }, [filteredData, sortColumn, sortDir, columns, isControlled]);
 
   // ── Client pagination slice ─────────────────────────────────────────────
   const { displayData, totalPages } = React.useMemo(() => {
@@ -268,11 +311,51 @@ function DataTable<T extends object>({
 
   const hasActions = rowActions && rowActions.length > 0;
 
+  // ── Virtualization ────────────────────────────────────────────────────────
+  const parentRef = React.useRef<HTMLDivElement>(null);
+  const rowVirtualizer = useVirtualizer({
+    count: displayData.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 52, // Typical row height
+    overscan: 5,
+    enabled: virtualized,
+  });
+
+  const virtualItems = rowVirtualizer.getVirtualItems();
+  const paddingTop = virtualItems.length > 0 ? virtualItems[0]?.start || 0 : 0;
+  const paddingBottom = virtualItems.length > 0
+    ? rowVirtualizer.getTotalSize() - (virtualItems[virtualItems.length - 1]?.end || 0)
+    : 0;
+
+  const colCount = columns.length + (selectable ? 1 : 0) + (hasActions ? 1 : 0);
+
   // ── Render ──────────────────────────────────────────────────────────────
   return (
-    <div className={cn("flex flex-col gap-0", className)}>
+    <div className={cn("flex flex-col gap-3", className)}>
+      {/* ── Toolbar ──────────────────────────────────────────────────────── */}
+      {(globalFilter !== undefined || onGlobalFilterChange) && (
+        <div className="flex items-center justify-between">
+          <div className="relative w-full max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[hsl(var(--muted-foreground))]" />
+            <Input
+              placeholder={searchPlaceholder}
+              value={activeGlobalFilter}
+              onChange={handleGlobalFilterChange}
+              className="pl-9 bg-[hsl(var(--card))]"
+            />
+          </div>
+        </div>
+      )}
+
       {/* Scrollable table container */}
-      <div className="relative w-full overflow-x-auto rounded-xl border border-[hsl(var(--border))]">
+      <div 
+        ref={parentRef}
+        className={cn(
+          "relative w-full overflow-x-auto rounded-xl border border-[hsl(var(--border))]",
+          virtualized && "overflow-y-auto max-h-[600px]",
+          containerClassName
+        )}
+      >
         <table
           className="w-full caption-bottom text-sm"
           aria-label={caption}
@@ -283,7 +366,10 @@ function DataTable<T extends object>({
           )}
 
           {/* ── Head ─────────────────────────────────────────────────── */}
-          <thead className="border-b border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.5)]">
+          <thead className={cn(
+            "border-b border-[hsl(var(--border))]",
+            virtualized ? "sticky top-0 z-10 bg-[hsl(var(--card))] shadow-sm" : "bg-[hsl(var(--muted)/0.5)]"
+          )}>
             <tr>
               {selectable && (
                 <th scope="col" className="w-10 px-3 py-3">
@@ -362,7 +448,7 @@ function DataTable<T extends object>({
             ) : displayData.length === 0 ? (
               <tr>
                 <td
-                  colSpan={columns.length + (selectable ? 1 : 0) + (hasActions ? 1 : 0)}
+                  colSpan={colCount}
                   className="py-0"
                 >
                   {emptyState ?? (
@@ -375,6 +461,69 @@ function DataTable<T extends object>({
                   )}
                 </td>
               </tr>
+            ) : virtualized ? (
+              <>
+                {paddingTop > 0 && (
+                  <tr><td style={{ height: `${paddingTop}px` }} colSpan={colCount} /></tr>
+                )}
+                {virtualItems.map((virtualRow) => {
+                  const row = displayData[virtualRow.index];
+                  const key = getKey(row);
+                  const isSelected = selected.has(key);
+
+                  return (
+                    <tr
+                      key={key}
+                      data-index={virtualRow.index}
+                      ref={rowVirtualizer.measureElement}
+                      className={cn(
+                        "transition-colors duration-100",
+                        "hover:bg-[hsl(var(--muted)/0.4)]",
+                        isSelected && "bg-[hsl(var(--primary)/0.05)] hover:bg-[hsl(var(--primary)/0.08)]"
+                      )}
+                      aria-selected={selectable ? isSelected : undefined}
+                    >
+                      {selectable && (
+                        <td className="px-3 py-3.5">
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => toggleRow(row)}
+                            aria-label={`Select row ${virtualRow.index + 1}`}
+                            className="h-4 w-4 rounded border-[hsl(var(--border))] accent-[hsl(var(--primary))]"
+                          />
+                        </td>
+                      )}
+
+                      {columns.map((col) => (
+                        <td
+                          key={col.id}
+                          className={cn(
+                            "px-4 py-3.5 text-sm text-[hsl(var(--foreground))]",
+                            col.hideOnMobile && "hidden sm:table-cell",
+                            col.className
+                          )}
+                        >
+                          {col.cell
+                            ? col.cell(row, virtualRow.index)
+                            : col.accessor
+                            ? String(row[col.accessor] ?? "—")
+                            : null}
+                        </td>
+                      ))}
+
+                      {hasActions && (
+                        <td className="px-3 py-3.5 text-right">
+                          <RowActionMenu row={row} actions={rowActions!} />
+                        </td>
+                      )}
+                    </tr>
+                  );
+                })}
+                {paddingBottom > 0 && (
+                  <tr><td style={{ height: `${paddingBottom}px` }} colSpan={colCount} /></tr>
+                )}
+              </>
             ) : (
               displayData.map((row, rowIndex) => {
                 const key = getKey(row);

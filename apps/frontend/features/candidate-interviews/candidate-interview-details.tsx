@@ -33,16 +33,16 @@ export function CandidateInterviewDetails({ interviewId }: CandidateInterviewDet
   const [declineOpen, setDeclineOpen] = React.useState(false);
 
   const handleReschedule = (date: string, reason: string) => {
-    console.log("Reschedule requested", date, reason);
+    void 0;
   };
 
   const handleConfirm = () => {
-    console.log("Confirmed");
+    void 0;
     setConfirmOpen(false);
   };
 
   const handleDecline = () => {
-    console.log("Declined");
+    void 0;
     setDeclineOpen(false);
   };
 

@@ -27,9 +27,9 @@ export function CandidateJobDetails({ jobId }: CandidateJobDetailsProps) {
   // Mock data fetch
   const job = mockJobs.find(j => j.id === jobId || j.slug === jobId) || mockJobs[0];
 
-  const handleApply = () => console.log("Apply");
-  const handleSave = () => console.log("Save");
-  const handleShare = () => console.log("Share");
+  const handleApply = () => void 0
+  const handleSave = () => void 0
+  const handleShare = () => void 0
 
   if (!job) {
     return <div>Job not found</div>;

@@ -11,7 +11,7 @@ interface InterviewCardProps {
   interview: Interview;
 }
 
-export function InterviewCard({ interview }: InterviewCardProps) {
+const InterviewCardBase = ({ interview }: InterviewCardProps) => {
   const isPending = interview.status === "PENDING_FEEDBACK";
   const isScheduled = interview.status === "SCHEDULED";
   
@@ -67,3 +67,5 @@ export function InterviewCard({ interview }: InterviewCardProps) {
     </div>
   );
 }
+
+export const InterviewCard = React.memo(InterviewCardBase);

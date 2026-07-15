@@ -5,7 +5,10 @@ import * as React from "react";
 import { RbacHero } from "./components/overview/rbac-hero";
 import { RbacMetrics } from "./components/overview/rbac-metrics";
 import { SecurityOverview } from "./components/overview/security-overview";
-import { RoleDistribution } from "./components/analytics/role-distribution";
+import dynamic from "next/dynamic";
+import { Skeleton } from "@/components/loaders/skeleton";
+
+const RoleDistribution = dynamic(() => import("./components/analytics/role-distribution").then(mod => mod.RoleDistribution), { ssr: false, loading: () => <Skeleton className="w-full h-[300px] rounded-xl" /> });
 import { RoleSearch } from "./components/search/role-search";
 import { RoleFilters } from "./components/search/role-filters";
 import { RolesTable } from "./components/directory/roles-table";

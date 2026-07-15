@@ -27,7 +27,7 @@ interface CandidateApplicationDetailsProps {
 export function CandidateApplicationDetails({ applicationId }: CandidateApplicationDetailsProps) {
   const application = mockApplications.find(a => a.id === applicationId) || mockApplications[0];
 
-  const handleWithdraw = () => console.log("Withdraw");
+  const handleWithdraw = () => void 0
 
   if (!application) return <div>Application not found</div>;
 

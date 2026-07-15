@@ -62,21 +62,25 @@ export function DefaultResume({ resume, onPreview, onDownload, onReplace, onDele
           </div>
         </div>
       </CardContent>
-      <CardFooter className="pt-4 border-t border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.2)] flex flex-wrap gap-2">
-        <Button variant="outline" size="sm" onClick={() => onPreview?.(resume)} className="flex-1 min-w-[80px]">
-          <Eye className="mr-2 h-4 w-4" />
-          Preview
-        </Button>
-        <Button variant="primary" size="sm" onClick={() => onDownload?.(resume)} className="flex-1 min-w-[80px]">
-          <Download className="mr-2 h-4 w-4" />
-          Download
-        </Button>
-        <Button variant="outline" size="icon-sm" onClick={onReplace} aria-label="Replace Resume">
-          <RefreshCw className="h-4 w-4 text-[hsl(var(--muted-foreground))]" />
-        </Button>
-        <Button variant="outline" size="icon-sm" onClick={() => onDelete?.(resume)} aria-label="Delete Resume">
-          <Trash2 className="h-4 w-4 text-[hsl(var(--danger))]" />
-        </Button>
+      <CardFooter className="pt-4 border-t border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.2)] flex flex-wrap gap-2 justify-between">
+        <div className="flex flex-1 min-w-0 gap-2">
+          <Button variant="outline" size="sm" onClick={() => onPreview?.(resume)} className="flex-1 min-w-0 px-2">
+            <Eye className="mr-1.5 h-4 w-4 shrink-0" />
+            <span className="truncate">Preview</span>
+          </Button>
+          <Button variant="primary" size="sm" onClick={() => onDownload?.(resume)} className="flex-1 min-w-0 px-2">
+            <Download className="mr-1.5 h-4 w-4 shrink-0" />
+            <span className="truncate">Download</span>
+          </Button>
+        </div>
+        <div className="flex gap-2 shrink-0">
+          <Button variant="outline" size="icon-sm" onClick={onReplace} aria-label="Replace Resume">
+            <RefreshCw className="h-4 w-4 text-[hsl(var(--muted-foreground))]" />
+          </Button>
+          <Button variant="outline" size="icon-sm" onClick={() => onDelete?.(resume)} aria-label="Delete Resume">
+            <Trash2 className="h-4 w-4 text-[hsl(var(--danger))]" />
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   );

@@ -18,8 +18,8 @@ export function JobDescription({ job }: JobDescriptionProps) {
       <section>
         <h3 className="text-lg font-semibold text-[hsl(var(--foreground))] mb-3">Key Responsibilities</h3>
         <ul className="list-disc pl-5 space-y-2 text-sm text-[hsl(var(--muted-foreground))] leading-relaxed">
-          {job.responsibilities.map((resp, index) => (
-            <li key={index}>{resp}</li>
+          {job.responsibilities.map((resp) => (
+            <li key={resp}>{resp}</li>
           ))}
         </ul>
       </section>
@@ -40,8 +40,8 @@ export function JobDescription({ job }: JobDescriptionProps) {
         <section>
           <h3 className="text-lg font-semibold text-[hsl(var(--foreground))] mb-3">Qualifications</h3>
           <ul className="list-disc pl-5 space-y-2 text-sm text-[hsl(var(--muted-foreground))] leading-relaxed">
-            {job.qualifications.map((qual, index) => (
-              <li key={index}>{qual}</li>
+            {job.qualifications.map((qual) => (
+              <li key={qual}>{qual}</li>
             ))}
           </ul>
         </section>
